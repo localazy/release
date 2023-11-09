@@ -139,7 +139,7 @@ runs:
       shell: bash
 
     - name: Generate changelog preview for PR
-      if: inputs.action == 'prepare'
+      if: inputs.action == 'release'
       id: release-changelog
       run: |
         {
