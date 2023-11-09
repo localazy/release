@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/localazy/release/compare/1.1.0...1.1.1) (2023-11-09)
+
+### 🐛 Bug Fixes
+
+* Fix wrong action ([a285b12](https://github.com/localazy/release/commit/a285b12))
+
 # [1.1.0](https://github.com/localazy/release/compare/1.0.0...1.1.0) (2023-11-09)
 
 ### ✨ Features
