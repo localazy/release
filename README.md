@@ -102,17 +102,18 @@ jobs:
 
 ### Inputs
 
-| Input name              | Description                                                             | Required | Default                        |
-|-------------------------|-------------------------------------------------------------------------|----------|--------------------------------|
-| `action`                | Possible actions: `prepare` or `release`.                               | `true`   | *N/A*                          |
-| `app-id`                | GitHub app id.                                                          | `true`   | *N/A*                          |
-| `app-key`               | GitHub app private key.                                                 | `true`   | *N/A*                          |
-| `npm-publish`           | Publish to NPM registry.                                                | `false`  | `"false"`                      |
-| `npm-registry`          | NPM registry.                                                           | `false`  | `"https://registry.npmjs.org"` |
-| `npm-token`             | NPM auth token.                                                         | `false`  | `""`                           |
-| `npm-build`             | Build package command. Only executed if `npm-publish` is set to `true`. | `false`  | `npm run build`                |
-| `major-bump`            | Bump major version tag after release.                                   | `false`  | `"false"`                      |
-| `major-bump-tag-prefix` | Major version tag prefix.                                               | `false`  | `""`                           |
+| Input name              | Description                                                                                                     | Required | Default                        |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------|----------|--------------------------------|
+| `action`                | Specifies which action to run. Possible values: `prepare` or `release`.                                         | `true`   | *N/A*                          |
+| `app-id`                | GitHub app id.                                                                                                  | `true`   | *N/A*                          |
+| `app-key`               | GitHub app private key.                                                                                         | `true`   | *N/A*                          |
+| `npm-publish`           | Publish to NPM registry.                                                                                        | `false`  | `"false"`                      |
+| `npm-registry`          | NPM registry.                                                                                                   | `false`  | `"https://registry.npmjs.org"` |
+| `npm-token`             | NPM auth token.                                                                                                 | `false`  | `""`                           |
+| `npm-access`            | Determines whether the published package should be publicly visible. Possible values: `public` or `restricted`. | `false`  | `"restricted"`                 |
+| `npm-build`             | Build package command. Only executed if `npm-publish` is set to `true`.                                         | `false`  | `npm run build`                |
+| `major-bump`            | Bump major version tag after release.                                                                           | `false`  | `"false"`                      |
+| `major-bump-tag-prefix` | Major version tag prefix.                                                                                       | `false`  | `""`                           |
 
 ### Schema
 
