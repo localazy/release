@@ -25,7 +25,7 @@ jobs:
   release:
     name: Release
     if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
-    runs-on: ubuntu-latest
+    runs-on: [ self-hosted, Linux ]
     steps:
       - name: Release new version
         uses: localazy/release@v1

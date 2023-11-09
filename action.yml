@@ -3,7 +3,7 @@ description: Localazy GitHub Release CI
 
 inputs:
   action:
-    description: 'Possible actions: ''prepare'' or ''release''.'
+    description: 'Specifies which action to run. Possible values: "prepare" or "release".'
     required: true
 
   app-id:
@@ -28,6 +28,11 @@ inputs:
     description: NPM auth token.
     required: false
     default: ''
+
+  npm-access:
+    description: 'Determines whether the published package should be publicly visible. Possible values: "public" or "restricted".'
+    required: false
+    default: 'restricted'
 
   npm-build:
     description: Build package command. Only executed if ''npm-publish'' is set to ''true''.
@@ -163,6 +168,7 @@ runs:
       with:
         registry: ${{ inputs.npm-registry }}
         token: ${{ inputs.npm-token }}
+        access: ${{ inputs.npm-access }}
 
     - name: Get major version and update tag
       if: inputs.action == 'release' && inputs.major-bump == 'true'
