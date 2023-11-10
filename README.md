@@ -40,7 +40,8 @@ jobs:
     if: github.event.head.ref != 'release' && !contains(github.event.commits[0].message, '🚀 release:')
     runs-on: [ self-hosted, Linux ]
     steps:
-      - uses: localazy/release@v1
+      - name: Prepare release branch and PR
+        uses: localazy/release@v1
         with:
           action: prepare
           app-id: ${{ secrets.AUTH_APP_ID }}
@@ -51,37 +52,62 @@ jobs:
     if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
     runs-on: [ self-hosted, Linux ]
     steps:
-      - uses: localazy/release@v1
+      - name: Release new version
+        uses: localazy/release@v1
         with:
           action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
 ```
 
-### Release NPM package
+### Release private NPM package
+
+You don't need to pass `npm-token` if you have `_auth` set in your `.npmrc` file.
 
 ```yml
 jobs:
   release:
     name: Release
-    if: ...
+    if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
     runs-on: [ self-hosted, Linux ]
     steps:
-      - uses: localazy/release@v1
+      - name: Release new version
+        uses: localazy/release@v1
         with:
           action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
           npm-publish: true
-          npm-registry: https://registry.npmjs.org
+          npm-registry: https://maven.localazy.com/repository/npm-private/
           npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
 ```
 
-> You need to provide `NPM_AUTH_TOKEN` secret.
+### Release public NPM package
+
+```yml
+jobs:
+  release:
+    name: Release
+    if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
+    runs-on: [ self-hosted, Linux ]
+    steps:
+      - name: Release new version
+        uses: localazy/release@v1
+        with:
+          action: release
+          app-id: ${{ secrets.AUTH_APP_ID }}
+          app-key: ${{ secrets.AUTH_APP_KEY }}
+          npm-publish: true
+          npm-access: public
+          npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
+```
 
 ### Bump major version after release
 
 Latest commit will be tagged with package major version, for example version `1.2.3` will be tagged with `1`.
+
+You can use `major-bump-tag-prefix` option to specify a prefix for tag, for example `major-bump-tag-prefix: v` will
+generate tag `v1`.
 
 ```yml
 jobs:
@@ -90,7 +116,8 @@ jobs:
     if: ...
     runs-on: [ self-hosted, Linux ]
     steps:
-      - uses: localazy/release@v1
+      - name: Release new version
+        uses: localazy/release@v1
         with:
           action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
@@ -99,6 +126,14 @@ jobs:
 ```
 
 ## 📚 Documentation
+
+### Secrets
+
+| Secret           | Description                        |
+|------------------|------------------------------------|
+| `AUTH_APP_ID`    | `Localazy CI Auth` app ID          |
+| `AUTH_APP_KEY`   | `Localazy CI Auth` app private key |
+| `NPM_AUTH_TOKEN` | NPM authorization token            |
 
 ### Inputs
 

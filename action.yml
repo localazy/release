@@ -35,7 +35,7 @@ inputs:
     default: 'restricted'
 
   npm-build:
-    description: Build package command. Only executed if ''npm-publish'' is set to ''true''.
+    description: Build package command. Only executed if "npm-publish" is set to "true".
     required: false
     default: 'npm run build'
 
@@ -58,8 +58,7 @@ runs:
     #
 
     - name: Set work folder permissions
-      run: |
-        pwd && sudo chown -R $USER:$USER ./
+      run: pwd && sudo chown -R $USER:$USER ./
       shell: bash
 
     - name: Checkout repository
@@ -72,7 +71,8 @@ runs:
       with:
         node-version: 16
 
-    - uses: tibdex/github-app-token@v1
+    - name: Setup App Authorization
+      uses: tibdex/github-app-token@v1
       id: generate-token
       with:
         app_id: ${{ inputs.app-id }}
