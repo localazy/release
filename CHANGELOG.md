@@ -1,3 +1,14 @@
+## [1.1.2](https://github.com/localazy/release/compare/1.1.1...1.1.2) (2023-11-13)
+
+### 🐛 Bug Fixes
+
+* Fix npm publish job ([6f90070](https://github.com/localazy/release/commit/6f90070))
+
+
+### 📚 Documentation
+
+* Added more examples to README.md ([7fcbfa4](https://github.com/localazy/release/commit/7fcbfa4))
+
 ## [1.1.1](https://github.com/localazy/release/compare/1.1.0...1.1.1) (2023-11-09)
 
 ### 🐛 Bug Fixes
