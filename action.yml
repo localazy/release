@@ -49,6 +49,11 @@ inputs:
     required: false
     default: ''
 
+  run-after-install:
+    description: Bash code to run after npm install.
+    required: false
+    default: ''
+
 runs:
   using: composite
   steps:
@@ -72,7 +77,7 @@ runs:
         node-version: 16
 
     - name: Setup App Authorization
-      uses: tibdex/github-app-token@v1
+      uses: tibdex/github-app-token@v2
       id: generate-token
       with:
         app_id: ${{ inputs.app-id }}
@@ -80,6 +85,11 @@ runs:
 
     - name: Install dependencies
       run: npm ci --ignore-scripts
+      shell: bash
+
+    - name: Run code after install
+      if: inputs.run-after-install != ''
+      run: eval ${{ inputs.run-after-install }}
       shell: bash
 
     #
@@ -149,6 +159,12 @@ runs:
         } > "$GITHUB_OUTPUT"
       shell: bash
 
+#    - name: Create tag
+#      uses: mathieudutour/github-tag-action@v6.1
+#      with:
+#        custom_tag: ${{ steps.release-version.outputs.package-version }}
+#        github_token: ${{ steps.generate-token.outputs.token }}
+
     - name: Add version tag and publish GitHub release
       if: inputs.action == 'release'
       uses: ncipollo/release-action@v1
@@ -156,19 +172,27 @@ runs:
         name: ${{ steps.release-version.outputs.package-version }}
         tag: ${{ steps.release-version.outputs.package-version }}
         body: ${{ steps.release-changelog.outputs.changelog }}
+        token: ${{ steps.generate-token.outputs.token }}
 
     - name: Build NPM package
       if: inputs.action == 'release' && inputs.npm-publish == 'true'
       run: $(echo "${{ inputs.npm-build }}")
       shell: bash
 
-    - name: Publish NPM package
-      if: inputs.action == 'release' && inputs.npm-publish == 'true'
+    - name: Publish private NPM package
+      if: inputs.action == 'release' && inputs.npm-publish == 'true' && inputs.npm-access == 'restricted'
+      run: |
+        NPM_TOKEN=${{ inputs.npm-token }}
+        NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
+        if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
+        npm publish --registry=${{ inputs.npm-registry }}
+      shell: bash
+
+    - name: Publish public NPM package
+      if: inputs.action == 'release' && inputs.npm-publish == 'true' && inputs.npm-access == 'public'
       uses: JS-DevTools/npm-publish@v1
       with:
-        registry: ${{ inputs.npm-registry }}
         token: ${{ inputs.npm-token }}
-        access: ${{ inputs.npm-access }}
 
     - name: Get major version and update tag
       if: inputs.action == 'release' && inputs.major-bump == 'true'
