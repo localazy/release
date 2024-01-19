@@ -1,0 +1,135 @@
+name: Publish Release
+description: Publish GitHub release, add Git tag and optionally publish NPM package
+
+inputs:
+  app-id:
+    description: GitHub app id.
+    required: true
+
+  app-key:
+    description: GitHub app private key.
+    required: true
+
+  npm-publish:
+    description: 'Publish to NPM registry. Possible values: "public" or "private".'
+    required: false
+    default: ''
+
+  npm-private-registry:
+    description: Private NPM registry.
+    required: false
+    default: 'https://maven.localazy.com/repository/npm-private/'
+
+  npm-token:
+    description: NPM auth token.
+    required: false
+    default: ''
+
+  npm-build:
+    description: Build package command. Only executed if "npm-publish" is set.
+    required: false
+    default: 'npm run build'
+
+  major-bump:
+    description: Bump major version tag after release.
+    required: false
+    default: 'false'
+
+  major-bump-tag-prefix:
+    description: Major version tag prefix.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - run: echo "blue=\033[1;34m" >> $GITHUB_ENV
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
+      shell: bash
+
+    - id: auth
+      uses: tibdex/github-app-token@v2
+      with:
+        app_id: ${{ inputs.app-id }}
+        private_key: ${{ inputs.app-key }}
+
+    - run: echo -e "\n${{env.blue}}=== Read package.json version ===\n"
+      shell: bash
+
+    - id: version
+      run: |
+        PACKAGE_VERSION=$(node -p "require('./package.json').version")
+        echo "package=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+        MAJOR_VERSION=${PACKAGE_VERSION%%.*}
+        echo "major=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Generate changelog for GitHub release ===\n"
+      shell: bash
+
+    - id: changelog
+      run: |
+        {
+          echo 'release-changelog<<EOF'
+          npx conventional-changelog -p @localazy/preset -r 1
+          echo EOF
+        } > "$GITHUB_OUTPUT"
+      shell: bash
+
+    - if: inputs.npm-publish != ''
+      run: echo -e "\n${{env.blue}}=== Build NPM package ===\n"
+      shell: bash
+
+    - if: inputs.npm-publish != ''
+      run: $(echo "${{ inputs.npm-build }}")
+      shell: bash
+
+    - if: inputs.npm-publish == 'private'
+      run: echo -e "\n${{env.blue}}=== Publish private NPM package ===\n"
+      shell: bash
+
+    - if: inputs.npm-publish == 'private'
+      run: |
+        NPM_TOKEN=${{ inputs.npm-token }}
+        NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
+        if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
+        npm publish --registry=${{ inputs.npm-private-registry }}
+      shell: bash
+
+    - if: inputs.npm-publish == 'public'
+      run: echo -e "\n${{env.blue}}=== Publish public NPM package ===\n"
+      shell: bash
+
+    - if: inputs.npm-publish == 'public'
+      uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ inputs.npm-token }}
+
+    - run: echo -e "\n${{env.blue}}=== Add Git tag and publish GitHub release ===\n"
+      shell: bash
+
+    - uses: ncipollo/release-action@v1
+      with:
+        name: ${{ steps.version.outputs.package }}
+        tag: ${{ steps.version.outputs.package }}
+        body: ${{ steps.changelog.outputs.release-changelog }}
+        token: ${{ steps.auth.outputs.token }}
+
+    - if: inputs.major-bump == 'true'
+      run: echo -e "\n${{env.blue}}=== Update major version tag ===\n"
+      shell: bash
+
+    - if: inputs.major-bump == 'true'
+      run: |
+        git tag -f "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
+        git push --delete origin "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
+        git push origin "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Delete release branch ===\n"
+      shell: bash
+
+    - run: git push origin -d release || true
+      shell: bash

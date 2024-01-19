@@ -1,0 +1,67 @@
+name: Prepare Release PR
+description: Create or update release branch and PR
+
+inputs:
+  app-id:
+    description: GitHub app id.
+    required: true
+
+  app-key:
+    description: GitHub app private key.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: echo "blue=\033[1;34m" >> $GITHUB_ENV
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
+      shell: bash
+
+    - id: auth
+      uses: tibdex/github-app-token@v2
+      with:
+        app_id: ${{ inputs.app-id }}
+        private_key: ${{ inputs.app-key }}
+
+    - run: echo -e "\n${{env.blue}}=== Bump package.json version ===\n"
+      shell: bash
+
+    - id: bump
+      run: |
+        BUMP_TYPE=$(npx conventional-recommended-bump -p @localazy/conventional-changelog-preset)
+        npm version $BUMP_TYPE --git-tag-version false
+        PACKAGE_VERSION=$(node -p "require('./package.json').version")
+        echo "package-version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Generate changelog preview for PR ===\n"
+      shell: bash
+
+    - id: changelog
+      run: |
+        {
+          echo 'changelog-preview<<EOF'
+          npx conventional-changelog -p @localazy/preset -c node_modules/@localazy/conventional-changelog-preset/config/short-pr.json -u
+          echo EOF
+        } >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Update CHANGELOG.md ===\n"
+      shell: bash
+
+    - run: npx conventional-changelog -p @localazy/preset -u -i CHANGELOG.md -s
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Prepare release branch and create PR ===\n"
+      shell: bash
+
+    - uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ steps.auth.outputs.token }}
+        branch: release
+        labels: release-preview
+        commit-message: "🚀 release: ${{ steps.bump.outputs.package-version }}"
+        title: ${{ steps.bump.outputs.package-version }}
+        body: ${{ steps.changelog.outputs.changelog-preview }}

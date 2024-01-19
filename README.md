@@ -4,9 +4,9 @@
   </a>
 </p>
 
-# 📦 localazy/release@v1
+# 📦 localazy/release
 
-Localazy GitHub action for automating the release process.
+Localazy GitHub actions for automating the release process.
 
 ## 🔧 Installation
 
@@ -14,7 +14,7 @@ Due to the limitations of GitHub's default action authorization, you cannot trig
 dispatched by the original action. For example, if a GitHub action creates a pull request it will not run any checks for
 that PR. This is intentional to prevent infinite actions loop, although it can be bypassed by using different
 authorization token, therefore you need to create GitHub app for sole purpose of CI authorization and pass **app id**
-and **app private key** to the `localazy/release` action.
+and **app private key** to the actions.
 
 https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
 
@@ -35,27 +35,34 @@ permissions:
   pull-requests: write
 
 jobs:
+  ci:
+    name: CI Init
+    runs-on: [ self-hosted, Linux ]
+    outputs:
+      action: ${{ steps.init.outputs.action }}
+    steps:
+      - id: init
+        uses: localazy/release/init@v2
+
   prepare:
-    name: Prepare Release
-    if: github.event.head.ref != 'release' && !contains(github.event.commits[0].message, '🚀 release:')
+    name: Prepare Release PR
+    needs: ci
+    if: needs.ci.outputs.action == 'prepare'
     runs-on: [ self-hosted, Linux ]
     steps:
-      - name: Prepare release branch and PR
-        uses: localazy/release@v1
+      - uses: localazy/release/prepare@v2
         with:
-          action: prepare
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
 
-  release:
-    name: Release
-    if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
+  publish:
+    name: Publish Release
+    needs: ci
+    if: needs.ci.outputs.action == 'publish'
     runs-on: [ self-hosted, Linux ]
     steps:
-      - name: Release new version
-        uses: localazy/release@v1
+      - uses: localazy/release/publish@v2
         with:
-          action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
 ```
@@ -66,19 +73,17 @@ You don't need to pass `npm-token` if you have `_auth` set in your `.npmrc` file
 
 ```yml
 jobs:
-  release:
-    name: Release
-    if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
+  publish:
+    name: Publish Release
+    needs: ci
+    if: needs.ci.outputs.action == 'publish'
     runs-on: [ self-hosted, Linux ]
     steps:
-      - name: Release new version
-        uses: localazy/release@v1
+      - uses: localazy/release/publish@v2
         with:
-          action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
-          npm-publish: true
-          npm-registry: https://maven.localazy.com/repository/npm-private/
+          npm-publish: private
           npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
 ```
 
@@ -86,19 +91,17 @@ jobs:
 
 ```yml
 jobs:
-  release:
-    name: Release
-    if: github.event.head.ref == 'release' || contains(github.event.commits[0].message, '🚀 release:')
+  publish:
+    name: Publish Release
+    needs: ci
+    if: needs.ci.outputs.action == 'publish'
     runs-on: [ self-hosted, Linux ]
     steps:
-      - name: Release new version
-        uses: localazy/release@v1
+      - uses: localazy/release/publish@v2
         with:
-          action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
-          npm-publish: true
-          npm-access: public
+          npm-publish: public
           npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
 ```
 
@@ -111,18 +114,18 @@ generate tag `v1`.
 
 ```yml
 jobs:
-  release:
-    name: Release
-    if: ...
+  publish:
+    name: Publish Release
+    needs: ci
+    if: needs.ci.outputs.action == 'publish'
     runs-on: [ self-hosted, Linux ]
     steps:
-      - name: Release new version
-        uses: localazy/release@v1
+      - uses: localazy/release/publish@v2
         with:
-          action: release
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
           major-bump: true
+          major-bump-tag-prefix: v
 ```
 
 ## 📚 Documentation
@@ -137,19 +140,18 @@ jobs:
 
 ### Inputs
 
-| Input name              | Description                                                                                                     | Required | Default                        |
-|-------------------------|-----------------------------------------------------------------------------------------------------------------|----------|--------------------------------|
-| `action`                | Specifies which action to run. Possible values: `prepare` or `release`.                                         | `true`   | *N/A*                          |
-| `app-id`                | GitHub app id.                                                                                                  | `true`   | *N/A*                          |
-| `app-key`               | GitHub app private key.                                                                                         | `true`   | *N/A*                          |
-| `npm-publish`           | Publish to NPM registry.                                                                                        | `false`  | `"false"`                      |
-| `npm-registry`          | NPM registry.                                                                                                   | `false`  | `"https://registry.npmjs.org"` |
-| `npm-token`             | NPM auth token.                                                                                                 | `false`  | `""`                           |
-| `npm-access`            | Determines whether the published package should be publicly visible. Possible values: `public` or `restricted`. | `false`  | `"restricted"`                 |
-| `npm-build`             | Build package command. Only executed if `npm-publish` is set to `true`.                                         | `false`  | `npm run build`                |
-| `major-bump`            | Bump major version tag after release.                                                                           | `false`  | `"false"`                      |
-| `major-bump-tag-prefix` | Major version tag prefix.                                                                                       | `false`  | `""`                           |
+| Input name              | Description                                                                                                     | Required | Default                                                |
+|-------------------------|-----------------------------------------------------------------------------------------------------------------|----------|--------------------------------------------------------|
+| `app-id`                | GitHub app id.                                                                                                  | `true`   | *N/A*                                                  |
+| `app-key`               | GitHub app private key.                                                                                         | `true`   | *N/A*                                                  |
+| `npm-publish`           | Publish to NPM registry. Possible values: `public` or `private`.                                                | `false`  | `""`                                                   |
+| `npm-private-registry`  | Private NPM registry.                                                                                           | `false`  | `"https://maven.localazy.com/repository/npm-private/"` |
+| `npm-token`             | NPM auth token.                                                                                                 | `false`  | `""`                                                   |
+| `npm-build`             | Build package command. Only executed if `npm-publish` is set to `true`.                                         | `false`  | `npm run build`                                        |
+| `major-bump`            | Bump major version tag after release.                                                                           | `false`  | `"false"`                                              |
+| `major-bump-tag-prefix` | Major version tag prefix.                                                                                       | `false`  | `""`                                                   |
 
-### Schema
+[//]: # (### Schema)
 
-![A picture is worth a thousand words.](docs/assets/release-ci.png)
+[//]: # ()
+[//]: # (![A picture is worth a thousand words.]&#40;docs/assets/release-ci.png&#41;)
