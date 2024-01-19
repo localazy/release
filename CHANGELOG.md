@@ -1,3 +1,16 @@
+# 2.0.0 (2024-01-19)
+
+
+
+### 💥 Breaking Changes
+
+* GitHub Release action v2 ([5537c2f](https://github.com/localazy/release/commit/5537c2f))
+
+
+### 🧰 Other Commits
+
+* Update CI ([354959c](https://github.com/localazy/release/commit/354959c))
+
 ## [1.1.2](https://github.com/localazy/release/compare/1.1.1...1.1.2) (2023-11-13)
 
 ### 🐛 Bug Fixes
