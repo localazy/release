@@ -1,3 +1,16 @@
+# 2.1.0 (2024-01-22)
+
+
+
+### ✨ Features
+
+* Update conventional-changelog-preset path ([8c6f498](https://github.com/localazy/release/commit/8c6f498))
+
+
+### 🐛 Bug Fixes
+
+* Add registry workaround ([3631543](https://github.com/localazy/release/commit/3631543))
+
 # 2.0.0 (2024-01-19)
 
 
