@@ -103,9 +103,15 @@ runs:
       shell: bash
 
     - if: inputs.npm-publish == 'public'
-      uses: JS-DevTools/npm-publish@v1
-      with:
-        token: ${{ inputs.npm-token }}
+      run: |
+        npm config set "registry=https://registry.npmjs.org" --location=project
+        npm config set "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" --location=project
+        npm config set "always-auth=true" --location=project
+        npm publish --access=public
+        npm config delete "registry" --location=project
+        npm config delete "//registry.npmjs.org/:_authToken" --location=project
+        npm config delete "always-auth" --location=project
+      shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Add Git tag and publish GitHub release ===\n"
       shell: bash
