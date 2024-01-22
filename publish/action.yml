@@ -28,7 +28,7 @@ inputs:
   npm-build:
     description: Build package command. Only executed if "npm-publish" is set.
     required: false
-    default: 'npm run build'
+    default: 'npm run build --if-present'
 
   major-bump:
     description: Bump major version tag after release.
@@ -123,9 +123,10 @@ runs:
 
     - if: inputs.major-bump == 'true'
       run: |
+        git config --get remote.origin.url
+        git remote add origin2 https://x-access-token:${{ steps.auth.outputs.token }}@github.com/${{ github.repository }}
         git tag -f "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
-        git push --delete origin "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
-        git push origin "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
+        git push origin2 "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}" --force
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Delete release branch ===\n"
