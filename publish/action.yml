@@ -123,8 +123,9 @@ runs:
 
     - if: inputs.major-bump == 'true'
       run: |
-        git config --get remote.origin.url
-        git remote add origin2 https://x-access-token:${{ steps.auth.outputs.token }}@github.com/${{ github.repository }}
+        URL=https://x-access-token:${{ steps.auth.outputs.token }}@github.com/${{ github.repository }}
+        git remote rm origin2 &> /dev/null
+        git remote add origin2 $URL
         git tag -f "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
         git push origin2 "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}" --force
       shell: bash
