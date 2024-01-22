@@ -1,3 +1,11 @@
+## 2.1.1 (2024-01-22)
+
+
+
+### 🐛 Bug Fixes
+
+* Fix existing origin error ([39c569d](https://github.com/localazy/release/commit/39c569d))
+
 # 2.1.0 (2024-01-22)
 
 
