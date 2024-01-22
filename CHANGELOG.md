@@ -1,3 +1,11 @@
+# 2.2.0 (2024-01-22)
+
+
+
+### ✨ Features
+
+* Update public npm package publishing ([86b5c63](https://github.com/localazy/release/commit/86b5c63))
+
 ## 2.1.1 (2024-01-22)
 
 

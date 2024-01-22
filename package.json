@@ -1,11 +1,11 @@
 {
   "name": "@localazy/release",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Localazy GitHub release action",
   "author": "Localazy <team@localazy.com>",
   "license": "MIT",
   "devDependencies": {
-    "@localazy/conventional-changelog-preset": "github:localazy/conventional-changelog-preset#ci-changes",
+    "@localazy/conventional-changelog-preset": "github:localazy/conventional-changelog-preset",
     "conventional-changelog": "^5.1.0",
     "conventional-changelog-cli": "^4.1.0",
     "conventional-changelog-writer": "github:localazy/conventional-changelog-writer",
