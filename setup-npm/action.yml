@@ -1,0 +1,53 @@
+name: CI Init
+description: Provides shared init steps for other actions
+
+inputs:
+  run-after-install:
+    description: Bash code to run after npm install.
+    required: false
+    default: ''
+
+  node-version:
+    description: Node version.
+    required: false
+    default: '16'
+
+runs:
+  using: composite
+  steps:
+    - run: echo "blue=\033[1;34m" >> $GITHUB_ENV
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Checkout repository ===\n"
+      shell: bash
+
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - run: echo -e "\n${{env.blue}}=== Setup Node ===\n"
+      shell: bash
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - run: echo -e "\n${{env.blue}}=== Install dependencies ===\n"
+      shell: bash
+
+    - run: |
+        npm ci --ignore-scripts
+        npm config set registry https://registry.npmjs.org/ --location=project
+        npm i -D conventional-changelog conventional-changelog-cli conventional-recommended-bump@9 https://github.com/localazy/conventional-changelog-preset.git https://github.com/localazy/conventional-changelog-writer.git
+        rm .npmrc
+        git checkout .npmrc || true
+      shell: bash
+
+    - run: echo -e "\n${{env.blue}}=== Run code after install ===\n"
+      if: inputs.run-after-install != ''
+      shell: bash
+
+    - if: inputs.run-after-install != ''
+      run: |
+        eval ${{ inputs.run-after-install }}
+      shell: bash

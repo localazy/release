@@ -10,11 +10,23 @@ inputs:
     description: GitHub app private key.
     required: true
 
+  run-after-install:
+    description: Bash code to run after npm install.
+    required: false
+    default: ''
+
+  node-version:
+    description: Node version.
+    required: false
+    default: '16'
+
 runs:
   using: composite
   steps:
-    - run: echo "blue=\033[1;34m" >> $GITHUB_ENV
-      shell: bash
+    - uses: localazy/release/setup-npm@v2
+      with:
+        run-after-install: ${{ inputs.run-after-install }}
+        node-version: ${{ inputs.node-version }}
 
     - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
       shell: bash
