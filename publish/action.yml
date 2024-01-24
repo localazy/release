@@ -135,13 +135,10 @@ runs:
       shell: bash
 
     - if: inputs.major-bump == 'true'
-      run: |
-        URL=https://x-access-token:${{ steps.auth.outputs.token }}@github.com/${{ github.repository }}
-        git remote rm origin2 &> /dev/null
-        git remote add origin2 $URL
-        git tag -f "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}"
-        git push origin2 "${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}" --force
-      shell: bash
+      uses: thejeff77/action-push-tag@v1.0.0
+      with:
+        tag: ${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}
+        force: true
 
     - run: echo -e "\n${{env.blue}}=== Delete release branch ===\n"
       shell: bash
