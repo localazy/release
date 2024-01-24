@@ -1,3 +1,11 @@
+# 2.3.0 (2024-01-24)
+
+
+
+### ✨ Features
+
+* Use action to update major version tag ([4b23dce](https://github.com/localazy/release/commit/4b23dce))
+
 ## 2.2.1 (2024-01-24)
 
 

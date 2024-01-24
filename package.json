@@ -1,6 +1,6 @@
 {
   "name": "@localazy/release",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "Localazy GitHub release action",
   "author": "Localazy <team@localazy.com>",
   "license": "MIT",
