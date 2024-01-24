@@ -1,3 +1,11 @@
+## 2.3.1 (2024-01-24)
+
+
+
+### 📚 Documentation
+
+* Update README.md ([674cae1](https://github.com/localazy/release/commit/674cae1))
+
 # 2.3.0 (2024-01-24)
 
 
