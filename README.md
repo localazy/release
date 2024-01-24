@@ -108,13 +108,14 @@ jobs:
 ### Run code after install
 
 ```diff
-  prepare:
-    name: Prepare Release PR
+jobs:
+  publish:
+    name: Publish Release
     needs: ci
-    if: needs.ci.outputs.action == 'prepare'
+    if: needs.ci.outputs.action == 'publish'
     runs-on: [ self-hosted, Linux ]
     steps:
-      - uses: localazy/release/prepare@v2
+      - uses: localazy/release/publish@v2
         with:
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
@@ -187,6 +188,7 @@ jobs:
 | `npm-build`             | Build package command. Only executed if `npm-publish` is set.    | `false`  | `npm run build --if-present` |
 | `major-bump`            | Bump major version tag after release.                            | `false`  | `false`                      |
 | `major-bump-tag-prefix` | Major version tag prefix.                                        | `false`  | `""`                         |
+| `run-after-install`     | Bash code to run after npm install.                              | `false`  | `""`                         |
 | `node-version`          | Node version.                                                    | `false`  | `16`                         |
 
 <small>[1]</small> `"https://maven.localazy.com/repository/npm-private/"`

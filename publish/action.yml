@@ -40,6 +40,11 @@ inputs:
     required: false
     default: ''
 
+  run-after-install:
+    description: Bash code to run after npm install.
+    required: false
+    default: ''
+
   node-version:
     description: Node version.
     required: false
