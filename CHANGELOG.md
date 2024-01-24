@@ -1,3 +1,16 @@
+## 2.2.1 (2024-01-24)
+
+
+
+### 🐛 Bug Fixes
+
+* Fix situation when different runner takes over action execution ([c2324a2](https://github.com/localazy/release/commit/c2324a2))
+
+
+### 📚 Documentation
+
+* Update README.md ([da235ca](https://github.com/localazy/release/commit/da235ca))
+
 # 2.2.0 (2024-01-22)
 
 
