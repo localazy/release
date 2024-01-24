@@ -67,11 +67,11 @@ jobs:
           app-key: ${{ secrets.AUTH_APP_KEY }}
 ```
 
-### Release private NPM package
+### Publish private NPM package
 
 You don't need to pass `npm-token` if you have `_auth` set in your `.npmrc` file.
 
-```yml
+```diff
 jobs:
   publish:
     name: Publish Release
@@ -83,13 +83,13 @@ jobs:
         with:
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
-          npm-publish: private
-          npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
++         npm-publish: private
++         npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
 ```
 
-### Release public NPM package
+### Publish public NPM package
 
-```yml
+```diff
 jobs:
   publish:
     name: Publish Release
@@ -101,8 +101,24 @@ jobs:
         with:
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
-          npm-publish: public
-          npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
++         npm-publish: public
++         npm-token: ${{ secrets.NPM_AUTH_TOKEN }}
+```
+
+### Run code after install
+
+```diff
+  prepare:
+    name: Prepare Release PR
+    needs: ci
+    if: needs.ci.outputs.action == 'prepare'
+    runs-on: [ self-hosted, Linux ]
+    steps:
+      - uses: localazy/release/prepare@v2
+        with:
+          app-id: ${{ secrets.AUTH_APP_ID }}
+          app-key: ${{ secrets.AUTH_APP_KEY }}
++         run-after-install: npm run localazy-download
 ```
 
 ### Bump major version after release
@@ -112,7 +128,7 @@ Latest commit will be tagged with package major version, for example version `1.
 You can use `major-bump-tag-prefix` option to specify a prefix for tag, for example `major-bump-tag-prefix: v` will
 generate tag `v1`.
 
-```yml
+```diff
 jobs:
   publish:
     name: Publish Release
@@ -124,8 +140,8 @@ jobs:
         with:
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
-          major-bump: true
-          major-bump-tag-prefix: v
++         major-bump: true
++         major-bump-tag-prefix: v
 ```
 
 ## 📚 Documentation
@@ -138,19 +154,17 @@ jobs:
 | `AUTH_APP_KEY`   | `Localazy CI Auth` app private key |
 | `NPM_AUTH_TOKEN` | NPM authorization token            |
 
-### Actions
+### Action `localazy/release/init@v2`
 
-#### localazy/release/init@v2
-
-##### Outputs
+###### Outputs
 
 | Output name | Description                                           |
 |-------------|-------------------------------------------------------|
 | `action`    | Detected job. Possible values `prepare` or `publish`. |
 
-#### localazy/release/prepare@v2
+### Action `localazy/release/prepare@v2`
 
-##### Inputs
+###### Inputs
 
 | Input name          | Description                         | Required | Default |
 |---------------------|-------------------------------------|----------|---------|
@@ -159,9 +173,9 @@ jobs:
 | `run-after-install` | Bash code to run after npm install. | `false`  | `""`    |
 | `node-version`      | Node version.                       | `false`  | `16`    |
 
-#### localazy/release/publish@v2
+### Action `localazy/release/publish@v2`
 
-##### Inputs
+###### Inputs
 
 | Input name              | Description                                                      | Required | Default                      |
 |-------------------------|------------------------------------------------------------------|----------|------------------------------|
@@ -177,11 +191,11 @@ jobs:
 
 <small>[1]</small> `"https://maven.localazy.com/repository/npm-private/"`
 
-#### localazy/release/setup-npm@v2
+### Action `localazy/release/setup-npm@v2`
 
 This action is internal, it's called by `localazy/release/prepare` and `localazy/release/publish`.
 
-##### Inputs
+###### Inputs
 
 | Input name          | Description                         | Required | Default |
 |---------------------|-------------------------------------|----------|---------|
