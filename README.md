@@ -138,20 +138,52 @@ jobs:
 | `AUTH_APP_KEY`   | `Localazy CI Auth` app private key |
 | `NPM_AUTH_TOKEN` | NPM authorization token            |
 
-### Inputs
+### Actions
 
-| Input name              | Description                                                                                                     | Required | Default                                                |
-|-------------------------|-----------------------------------------------------------------------------------------------------------------|----------|--------------------------------------------------------|
-| `app-id`                | GitHub app id.                                                                                                  | `true`   | *N/A*                                                  |
-| `app-key`               | GitHub app private key.                                                                                         | `true`   | *N/A*                                                  |
-| `npm-publish`           | Publish to NPM registry. Possible values: `public` or `private`.                                                | `false`  | `""`                                                   |
-| `npm-private-registry`  | Private NPM registry.                                                                                           | `false`  | `"https://maven.localazy.com/repository/npm-private/"` |
-| `npm-token`             | NPM auth token.                                                                                                 | `false`  | `""`                                                   |
-| `npm-build`             | Build package command. Only executed if `npm-publish` is set to `true`.                                         | `false`  | `npm run build`                                        |
-| `major-bump`            | Bump major version tag after release.                                                                           | `false`  | `"false"`                                              |
-| `major-bump-tag-prefix` | Major version tag prefix.                                                                                       | `false`  | `""`                                                   |
+#### localazy/release/init@v2
 
-[//]: # (### Schema)
+##### Outputs
 
-[//]: # ()
-[//]: # (![A picture is worth a thousand words.]&#40;docs/assets/release-ci.png&#41;)
+| Output name | Description                                           |
+|-------------|-------------------------------------------------------|
+| `action`    | Detected job. Possible values `prepare` or `publish`. |
+
+#### localazy/release/prepare@v2
+
+##### Inputs
+
+| Input name          | Description                         | Required | Default |
+|---------------------|-------------------------------------|----------|---------|
+| `app-id`            | GitHub app id.                      | `true`   | *N/A*   |
+| `app-key`           | GitHub app private key.             | `true`   | *N/A*   |
+| `run-after-install` | Bash code to run after npm install. | `false`  | `""`    |
+| `node-version`      | Node version.                       | `false`  | `16`    |
+
+#### localazy/release/publish@v2
+
+##### Inputs
+
+| Input name              | Description                                                      | Required | Default                      |
+|-------------------------|------------------------------------------------------------------|----------|------------------------------|
+| `app-id`                | GitHub app id.                                                   | `true`   | *N/A*                        |
+| `app-key`               | GitHub app private key.                                          | `true`   | *N/A*                        |
+| `npm-publish`           | Publish to NPM registry. Possible values: `public` or `private`. | `false`  | `""`                         |
+| `npm-private-registry`  | Private NPM registry.                                            | `false`  | <small>[1]</small>           |
+| `npm-token`             | NPM auth token.                                                  | `false`  | `""`                         |
+| `npm-build`             | Build package command. Only executed if `npm-publish` is set.    | `false`  | `npm run build --if-present` |
+| `major-bump`            | Bump major version tag after release.                            | `false`  | `false`                      |
+| `major-bump-tag-prefix` | Major version tag prefix.                                        | `false`  | `""`                         |
+| `node-version`          | Node version.                                                    | `false`  | `16`                         |
+
+<small>[1]</small> `"https://maven.localazy.com/repository/npm-private/"`
+
+#### localazy/release/setup-npm@v2
+
+This action is internal, it's called by `localazy/release/prepare` and `localazy/release/publish`.
+
+##### Inputs
+
+| Input name          | Description                         | Required | Default |
+|---------------------|-------------------------------------|----------|---------|
+| `run-after-install` | Bash code to run after npm install. | `false`  | `""`    |
+| `node-version`      | Node version.                       | `false`  | `16`    |
