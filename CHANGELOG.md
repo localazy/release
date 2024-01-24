@@ -1,3 +1,11 @@
+# 2.4.0 (2024-01-24)
+
+
+
+### ✨ Features
+
+* Add run-after-install to publish action ([231fdae](https://github.com/localazy/release/commit/231fdae))
+
 ## 2.3.1 (2024-01-24)
 
 
