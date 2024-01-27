@@ -134,6 +134,7 @@ runs:
         tag: ${{ steps.version.outputs.package }}
         body: ${{ steps.changelog.outputs.release-changelog }}
         token: ${{ steps.auth.outputs.token }}
+        skipIfReleaseExists: true
 
     - if: inputs.major-bump == 'true'
       run: echo -e "\n${{env.blue}}=== Update major version tag ===\n"
