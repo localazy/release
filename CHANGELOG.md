@@ -1,3 +1,11 @@
+# 2.5.0 (2024-01-27)
+
+
+
+### ✨ Features
+
+* Skip GH release if it already exists ([2ff38ec](https://github.com/localazy/release/commit/2ff38ec))
+
 # 2.4.0 (2024-01-24)
 
 
