@@ -69,7 +69,7 @@ runs:
     - run: echo -e "\n${{env.blue}}=== Prepare release branch and create PR ===\n"
       shell: bash
 
-    - uses: peter-evans/create-pull-request@v5
+    - uses: peter-evans/create-pull-request@v6
       with:
         token: ${{ steps.auth.outputs.token }}
         branch: release
