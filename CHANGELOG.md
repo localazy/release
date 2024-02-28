@@ -1,3 +1,11 @@
+# 2.6.0 (2024-02-28)
+
+
+
+### ✨ Features
+
+* Update peter-evans/create-pull-request to v6 ([7bfdc3a](https://github.com/localazy/release/commit/7bfdc3a))
+
 # 2.5.0 (2024-01-27)
 
 
