@@ -1,3 +1,11 @@
+# 2.7.0 (2024-03-08)
+
+
+
+### ✨ Features
+
+* Add cypress-process-clean-up typescript action ([c83a566](https://github.com/localazy/release/commit/c83a566))
+
 # 2.6.0 (2024-02-28)
 
 
