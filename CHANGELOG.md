@@ -1,3 +1,11 @@
+# 2.8.0 (2024-03-08)
+
+
+
+### ✨ Features
+
+* Detect Chrome orphans in cypress-process-clean-up ([538b38d](https://github.com/localazy/release/commit/538b38d))
+
 # 2.7.0 (2024-03-08)
 
 
