@@ -4,11 +4,27 @@
   "description": "Localazy GitHub release action",
   "author": "Localazy <team@localazy.com>",
   "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run build:main && npm run build:post",
+    "build:main": "npm run compile -- --out ./dist/main src/main.ts ",
+    "build:post": "npm run compile -- --out ./dist/post src/post.ts",
+    "compile": "ncc build --minify --no-cache --target es2022 --v8-cache"
+  },
+  "dependencies": {
+    "ps-list": "^8.1.1"
+  },
   "devDependencies": {
     "@localazy/conventional-changelog-preset": "github:localazy/conventional-changelog-preset",
+    "@types/node": "^20.6.2",
+    "@vercel/ncc": "^0.38.0",
     "conventional-changelog": "^5.1.0",
     "conventional-changelog-cli": "^4.1.0",
     "conventional-changelog-writer": "github:localazy/conventional-changelog-writer",
-    "conventional-recommended-bump": "^9.0.0"
+    "conventional-recommended-bump": "^9.0.0",
+    "typescript": "^5.2.2"
   }
 }

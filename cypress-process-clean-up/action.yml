@@ -1,0 +1,7 @@
+name: Clean Cypress Process
+description: ''
+
+runs:
+  using: 'node20'
+  main: '../dist/main/index.js'
+  post: '../dist/post/index.js'
