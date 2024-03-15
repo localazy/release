@@ -20,6 +20,10 @@ inputs:
     required: false
     default: '16'
 
+  generate-badges:
+    description: Generate badges.
+    required: false
+
 runs:
   using: composite
   steps:
@@ -65,6 +69,59 @@ runs:
 
     - run: npx conventional-changelog -p @localazy/preset -u -i CHANGELOG.md -s
       shell: bash
+
+    - if: inputs.generate-badges == 'true'
+      run: echo -e "\n${{env.blue}}=== Generate badges ===\n"
+      shell: bash
+
+    - if: inputs.generate-badges == 'true'
+      run: |
+        npm run test:coverage
+        VERSION=$(node -p "require('./package.json').version")
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        LICENSE=$(node -p "require('./package.json').license")
+        echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
+        COVERAGE=$(node -p "require('./coverage/coverage-summary.json').total.lines.pct")
+        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
+        BADGES_PATH=.github/badges
+        echo "path=$BADGES_PATH" >> "${GITHUB_OUTPUT}"
+        mkdir -p $BADGES_PATH
+      shell: bash
+
+    - if: inputs.generate-badges == 'true'
+      name: Version badge
+      uses: emibcn/badge-action@v2.0.2
+      with:
+        label: npm
+        status: ${{ steps.data.outputs.version }}
+        color: 0558bd,066fef
+        path: ${{ steps.data.outputs.path }}/version.svg
+
+    - if: inputs.generate-badges == 'true'
+      name: License badge
+      uses: emibcn/badge-action@v2.0.2
+      with:
+        label: license
+        status: ${{ steps.data.outputs.license }}
+        color: 0558bd,066fef
+        path: ${{ steps.data.outputs.path }}/license.svg
+
+    - if: inputs.generate-badges == 'true'
+      name: Coverage badge
+      uses: emibcn/badge-action@v2.0.2
+      with:
+        label: coverage
+        status: ${{ steps.data.outputs.coverage }}%
+        color: ${{ steps.data.outputs.coverage > 90 && 'green'
+          || steps.data.outputs.coverage > 80 && 'yellow,green'
+          || steps.data.outputs.coverage > 70 && 'yellow'
+          || steps.data.outputs.coverage > 60 && 'orange,yellow'
+          || steps.data.outputs.coverage > 50 && 'orange'
+          || steps.data.outputs.coverage > 40 && 'red,orange'
+          || steps.data.outputs.coverage > 30 && 'red,red,orange'
+          || steps.data.outputs.coverage > 20 && 'red,red,red,orange'
+          || 'red' }}
+        path: ${{ steps.data.outputs.path }}/coverage.svg
 
     - run: echo -e "\n${{env.blue}}=== Prepare release branch and create PR ===\n"
       shell: bash
