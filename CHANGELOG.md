@@ -1,3 +1,11 @@
+# 2.9.0 (2024-03-15)
+
+
+
+### ✨ Features
+
+* Add support for badges ([74d6531](https://github.com/localazy/release/commit/74d6531))
+
 # 2.8.0 (2024-03-08)
 
 
