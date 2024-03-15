@@ -1,3 +1,11 @@
+## 2.9.1 (2024-03-15)
+
+
+
+### 🐛 Bug Fixes
+
+* Add missing step id ([00b3bc3](https://github.com/localazy/release/commit/00b3bc3))
+
 # 2.9.0 (2024-03-15)
 
 
