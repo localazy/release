@@ -75,6 +75,7 @@ runs:
       shell: bash
 
     - if: inputs.generate-badges == 'true'
+      id: data
       run: |
         npm run test:coverage
         VERSION=$(node -p "require('./package.json').version")
