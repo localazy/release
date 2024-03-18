@@ -1,3 +1,11 @@
+## 2.10.1 (2024-03-18)
+
+
+
+### 🐛 Bug Fixes
+
+* Add empty line to end of saved file to fix linting issues ([c90eea3](https://github.com/localazy/release/commit/c90eea3))
+
 # 2.10.0 (2024-03-18)
 
 
