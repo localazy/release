@@ -1,3 +1,11 @@
+# 2.10.0 (2024-03-18)
+
+
+
+### ✨ Features
+
+* Update badges support ([b963f04](https://github.com/localazy/release/commit/b963f04))
+
 ## 2.9.1 (2024-03-15)
 
 
