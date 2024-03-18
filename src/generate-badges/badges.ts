@@ -75,7 +75,9 @@ const updateConfig = (path: string, config: BadgesConfig): BadgesConfig => {
     })
   };
 
-  outputFileSync(path, JSON.stringify(updatedConfig, null, 2));
+  const json: string = JSON.stringify(updatedConfig, null, 2);
+
+  outputFileSync(path, `${json}\n`);
 
   return updatedConfig;
 };
