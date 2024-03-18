@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "Node16",
-    "moduleResolution": "Node16",
+    "module": "ES2022",
+    "moduleResolution": "Node",
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "strict": true,
     "types": [
-      "node"
+      "@types/node",
+      "@types/fs-extra",
     ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

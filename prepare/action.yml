@@ -20,9 +20,45 @@ inputs:
     required: false
     default: '16'
 
-  generate-badges:
+  badges:
     description: Generate badges.
     required: false
+
+  badges-coverage:
+    description: ''
+    required: false
+    default: >
+      node -p "require('./coverage/coverage-summary.json').total.lines.pct"
+
+  badges-size:
+    description: ''
+    required: false
+    default: >
+      gzip -c dist/browser/localazy-cdn-client.umd.min.js | wc -c
+
+  badges-version:
+    description: ''
+    required: false
+    default: > 
+      node -p "require('./package.json').version"
+
+  badges-license:
+    description: ''
+    required: false
+    default: >
+      node -p "require('./package.json').license"
+
+  badges-size-command:
+    description: ''
+    required: false
+    default: >
+      npm run build
+
+  badges-coverage-command:
+    description: ''
+    required: false
+    default: >
+      npm run test:coverage
 
 runs:
   using: composite
@@ -70,59 +106,40 @@ runs:
     - run: npx conventional-changelog -p @localazy/preset -u -i CHANGELOG.md -s
       shell: bash
 
-    - if: inputs.generate-badges == 'true'
+    - if: inputs.badges == 'true'
       run: echo -e "\n${{env.blue}}=== Generate badges ===\n"
       shell: bash
 
-    - if: inputs.generate-badges == 'true'
+    - if: inputs.badges == 'true'
       id: data
       run: |
-        npm run test:coverage
-        VERSION=$(node -p "require('./package.json').version")
+        $(echo "${{ inputs.badges-size-command }}")
+        $(echo "${{ inputs.badges-coverage-command }}")
+
+        VERSION=$(${{ inputs.badges-version }})
+        LICENSE=$(${{ inputs.badges-license }})
+        SIZE=$(${{ inputs.badges-size }})
+        COVERAGE=$(${{ inputs.badges-coverage }})
+
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-        LICENSE=$(node -p "require('./package.json').license")
         echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
-        COVERAGE=$(node -p "require('./coverage/coverage-summary.json').total.lines.pct")
         echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
-        BADGES_PATH=.github/badges
-        echo "path=$BADGES_PATH" >> "${GITHUB_OUTPUT}"
-        mkdir -p $BADGES_PATH
+        echo "size=$SIZE" >> "$GITHUB_OUTPUT"
       shell: bash
 
-    - if: inputs.generate-badges == 'true'
-      name: Version badge
-      uses: emibcn/badge-action@v2.0.2
+    - if: inputs.badges == 'true'
+      uses: localazy/release/generate-badges@v2
       with:
-        label: npm
-        status: ${{ steps.data.outputs.version }}
-        color: 0558bd,066fef
-        path: ${{ steps.data.outputs.path }}/version.svg
+        version: ${{ steps.data.outputs.version }}
+        license: ${{ steps.data.outputs.license }}
+        coverage: ${{ steps.data.outputs.coverage }}
+        size: ${{ steps.data.outputs.size }}
 
-    - if: inputs.generate-badges == 'true'
-      name: License badge
-      uses: emibcn/badge-action@v2.0.2
-      with:
-        label: license
-        status: ${{ steps.data.outputs.license }}
-        color: 0558bd,066fef
-        path: ${{ steps.data.outputs.path }}/license.svg
+    - run: echo -e "\n${{env.blue}}=== Clean changelog npm deps ===\n"
+      shell: bash
 
-    - if: inputs.generate-badges == 'true'
-      name: Coverage badge
-      uses: emibcn/badge-action@v2.0.2
-      with:
-        label: coverage
-        status: ${{ steps.data.outputs.coverage }}%
-        color: ${{ steps.data.outputs.coverage > 90 && 'green'
-          || steps.data.outputs.coverage > 80 && 'yellow,green'
-          || steps.data.outputs.coverage > 70 && 'yellow'
-          || steps.data.outputs.coverage > 60 && 'orange,yellow'
-          || steps.data.outputs.coverage > 50 && 'orange'
-          || steps.data.outputs.coverage > 40 && 'red,orange'
-          || steps.data.outputs.coverage > 30 && 'red,red,orange'
-          || steps.data.outputs.coverage > 20 && 'red,red,red,orange'
-          || 'red' }}
-        path: ${{ steps.data.outputs.path }}/coverage.svg
+    - run: npm r conventional-changelog conventional-changelog-cli conventional-recommended-bump @localazy/conventional-changelog-preset conventional-changelog-writer
+      shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Prepare release branch and create PR ===\n"
       shell: bash
