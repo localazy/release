@@ -50,6 +50,11 @@ inputs:
     required: false
     default: '16'
 
+outputs:
+  tag:
+    description: Package tag.
+    value: ${{ steps.version.outputs.package }}
+
 runs:
   using: composite
   steps:
