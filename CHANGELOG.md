@@ -1,3 +1,11 @@
+# 2.11.0 (2024-04-15)
+
+
+
+### ✨ Features
+
+- Add publish action output ([094c401](https://github.com/localazy/release/commit/094c401))
+
 ## 2.10.1 (2024-03-18)
 
 
