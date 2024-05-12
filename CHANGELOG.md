@@ -1,3 +1,10 @@
+## <small>2.11.1 (2024-05-12)</small>
+
+* 🐛 fix: Lock changelog packages major versions ([c6857dd](https://github.com/localazy/release/commit/c6857dd))
+* 🔧 chore: Fix audit ([66fb481](https://github.com/localazy/release/commit/66fb481))
+
+
+
 # 2.11.0 (2024-04-15)
 
 
