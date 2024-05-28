@@ -36,7 +36,7 @@ runs:
       shell: bash
 
     - run: |
-        npm ci --ignore-scripts
+        npm ci
         npm config set registry https://registry.npmjs.org/ --location=project
         npm i -D conventional-changelog@5 conventional-changelog-cli@4 conventional-recommended-bump@9 @localazy/conventional-changelog-preset https://github.com/localazy/conventional-changelog-writer.git
         rm .npmrc

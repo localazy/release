@@ -60,6 +60,11 @@ inputs:
     default: >
       npm run test:coverage
 
+  monorepo-bump:
+    description: Monorepo paths.
+    required: false
+    default: 'false'
+
 runs:
   using: composite
   steps:
@@ -83,9 +88,25 @@ runs:
     - id: bump
       run: |
         BUMP_TYPE=$(npx conventional-recommended-bump -p @localazy/conventional-changelog-preset)
-        npm version $BUMP_TYPE --git-tag-version false
+        echo "bump-type=$BUMP_TYPE" >> "$GITHUB_OUTPUT"
         PACKAGE_VERSION=$(node -p "require('./package.json').version")
         echo "package-version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+      shell: bash
+
+    - if: monorepo-bump == 'false'
+      run: |
+        npm version ${{ steps.bump.outputs.bump-type }} --git-tag-version false
+      shell: bash
+
+    - if: monorepo-bump != 'false'
+      run: |
+        PROJECT_ROOT=$(pwd)
+        declare -a BUMP_LIST=(${{ inputs.monorepo-bump }})
+        for item in "${BUMP_LIST[@]}"; do
+          cd $PROJECT_ROOT
+          cd "$item"
+          npm version ${{ steps.bump.outputs.bump-type }} --git-tag-version false
+        done
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Generate changelog preview for PR ===\n"

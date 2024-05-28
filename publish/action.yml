@@ -50,6 +50,26 @@ inputs:
     required: false
     default: '16'
 
+  monorepo-public-npm-token:
+    description: NPM auth token.
+    required: false
+    default: ''
+
+  monorepo-public-npm-publish:
+    description: Monorepo public npm packages.
+    required: false
+    default: 'false'
+
+  monorepo-private-npm-token:
+    description: NPM auth token.
+    required: false
+    default: ''
+
+  monorepo-private-npm-publish:
+    description: Monorepo private npm packages.
+    required: false
+    default: 'false'
+
 outputs:
   tag:
     description: Package tag.
@@ -113,6 +133,8 @@ runs:
         NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
         if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
         npm publish --registry=${{ inputs.npm-private-registry }}
+        rm .npmrc
+        git checkout .npmrc || true
       shell: bash
 
     - if: inputs.npm-publish == 'public'
@@ -125,9 +147,42 @@ runs:
         npm config set "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" --location=project
         npm config set "always-auth=true" --location=project
         npm publish --access=public
-        npm config delete "registry" --location=project
-        npm config delete "//registry.npmjs.org/:_authToken" --location=project
-        npm config delete "always-auth" --location=project
+        rm .npmrc
+        git checkout .npmrc || true
+      shell: bash
+
+    - if: inputs.monorepo-private-npm-publish != 'false' && inputs.monorepo-private-npm-token != ''
+      run: |
+        PROJECT_ROOT=$(pwd)
+        declare -a PUBLIC_NPM_LIST=(${{ inputs.monorepo-private-npm-publish }})
+        for item in "${PUBLIC_NPM_LIST[@]}"; do
+          cd $PROJECT_ROOT
+          cd "$item"
+          npm run build
+          NPM_TOKEN=${{ inputs.monorepo-private-npm-token }}
+          NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
+          if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
+          npm publish --registry=${{ inputs.npm-private-registry }}
+          rm .npmrc
+          git checkout .npmrc || true
+        done
+      shell: bash
+
+    - if: inputs.monorepo-public-npm-publish != 'false' && inputs.monorepo-public-npm-token != ''
+      run: |
+        PROJECT_ROOT=$(pwd)
+        declare -a PUBLIC_NPM_LIST=(${{ inputs.monorepo-public-npm-publish }})
+        for item in "${PUBLIC_NPM_LIST[@]}"; do
+          cd $PROJECT_ROOT
+          cd "$item"
+          npm run build
+          npm config set "registry=https://registry.npmjs.org" --location=project
+          npm config set "//registry.npmjs.org/:_authToken=${{ inputs.monorepo-public-npm-token }}" --location=project
+          npm config set "always-auth=true" --location=project
+          npm publish --access=public
+          rm .npmrc
+          git checkout .npmrc || true
+        done
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Add Git tag and publish GitHub release ===\n"
@@ -148,7 +203,7 @@ runs:
     - if: inputs.major-bump == 'true'
       uses: thejeff77/action-push-tag@v1.0.0
       with:
-        tag: ${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}
+        tag: '${{ inputs.major-bump-tag-prefix }}${{ steps.version.outputs.major }}'
         force: true
 
     - run: echo -e "\n${{env.blue}}=== Delete release branch ===\n"
