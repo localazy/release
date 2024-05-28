@@ -1,3 +1,9 @@
+# 2.12.0 (2024-05-28)
+
+### ✨ Features
+
+- Add basic monorepo support ([92b6c53](https://github.com/localazy/release/commit/92b6c53))
+
 ## <small>2.11.1 (2024-05-12)</small>
 
 * 🐛 fix: Lock changelog packages major versions ([c6857dd](https://github.com/localazy/release/commit/c6857dd))
