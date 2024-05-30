@@ -93,12 +93,12 @@ runs:
         echo "package-version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
 
-    - if: monorepo-bump == 'false'
+    - if: inputs.monorepo-bump == 'false'
       run: |
         npm version ${{ steps.bump.outputs.bump-type }} --git-tag-version false
       shell: bash
 
-    - if: monorepo-bump != 'false'
+    - if: inputs.monorepo-bump != 'false'
       run: |
         PROJECT_ROOT=$(pwd)
         declare -a BUMP_LIST=(${{ inputs.monorepo-bump }})
