@@ -1,3 +1,9 @@
+## 2.12.1 (2024-05-30)
+
+### 🐛 Bug Fixes
+
+- Fix unrecognized inputs error ([0217f52](https://github.com/localazy/release/commit/0217f52))
+
 # 2.12.0 (2024-05-28)
 
 ### ✨ Features
