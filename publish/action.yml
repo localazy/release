@@ -145,7 +145,7 @@ runs:
       run: |
         npm config set "registry=https://registry.npmjs.org" --location=project
         npm config set "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" --location=project
-        npm config set "always-auth=true" --location=project
+        if  [ ${{ inputs.node-version }} == 16* ]; then npm config set "always-auth=true" --location=project; fi
         npm publish --access=public
         rm .npmrc
         git checkout .npmrc || true
@@ -158,6 +158,7 @@ runs:
         for item in "${PUBLIC_NPM_LIST[@]}"; do
           cd $PROJECT_ROOT
           cd "$item"
+          npm ci
           npm run build
           NPM_TOKEN=${{ inputs.monorepo-private-npm-token }}
           NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
@@ -175,10 +176,11 @@ runs:
         for item in "${PUBLIC_NPM_LIST[@]}"; do
           cd $PROJECT_ROOT
           cd "$item"
+          npm ci
           npm run build
           npm config set "registry=https://registry.npmjs.org" --location=project
           npm config set "//registry.npmjs.org/:_authToken=${{ inputs.monorepo-public-npm-token }}" --location=project
-          npm config set "always-auth=true" --location=project
+          if  [ ${{ inputs.node-version }} == 16* ]; then npm config set "always-auth=true" --location=project; fi
           npm publish --access=public
           rm .npmrc
           git checkout .npmrc || true
