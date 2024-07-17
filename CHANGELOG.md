@@ -1,3 +1,9 @@
+## 2.12.2 (2024-07-17)
+
+### 🧰 Other Commits
+
+- Update monorepo publish ([e6b36d5](https://github.com/localazy/release/commit/e6b36d5))
+
 ## 2.12.1 (2024-05-30)
 
 ### 🐛 Bug Fixes
