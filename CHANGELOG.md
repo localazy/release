@@ -1,3 +1,9 @@
+## 2.12.3 (2024-08-26)
+
+### 🧰 Other Commits
+
+- Separate steps for monorepo npm install, build and publish ([b738a54](https://github.com/localazy/release/commit/b738a54))
+
 ## 2.12.2 (2024-07-17)
 
 ### 🧰 Other Commits
