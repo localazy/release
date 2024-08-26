@@ -50,8 +50,18 @@ inputs:
     required: false
     default: '16'
 
+  monorepo-npm-install:
+    description: Run npm install in monorepo packages.
+    required: false
+    default: 'false'
+
+  monorepo-npm-build:
+    description: Run npm build in monorepo packages.
+    required: false
+    default: 'false'
+
   monorepo-public-npm-token:
-    description: NPM auth token.
+    description: Public NPM auth token.
     required: false
     default: ''
 
@@ -61,7 +71,7 @@ inputs:
     default: 'false'
 
   monorepo-private-npm-token:
-    description: NPM auth token.
+    description: Private NPM auth token.
     required: false
     default: ''
 
@@ -151,15 +161,35 @@ runs:
         git checkout .npmrc || true
       shell: bash
 
-    - if: inputs.monorepo-private-npm-publish != 'false' && inputs.monorepo-private-npm-token != ''
+    - if: inputs.monorepo-npm-install != 'false'
       run: |
         PROJECT_ROOT=$(pwd)
-        declare -a PUBLIC_NPM_LIST=(${{ inputs.monorepo-private-npm-publish }})
-        for item in "${PUBLIC_NPM_LIST[@]}"; do
+        declare -a NPM_INSTALL_LIST=(${{ inputs.monorepo-npm-install }})
+        for item in "${NPM_INSTALL_LIST[@]}"; do
           cd $PROJECT_ROOT
           cd "$item"
           npm ci
+        done
+      shell: bash
+
+    - if: inputs.monorepo-npm-build != 'false'
+      run: |
+        PROJECT_ROOT=$(pwd)
+        declare -a NPM_BUILD_LIST=(${{ inputs.monorepo-npm-build }})
+        for item in "${NPM_BUILD_LIST[@]}"; do
+          cd $PROJECT_ROOT
+          cd "$item"
           npm run build
+        done
+      shell: bash
+
+    - if: inputs.monorepo-private-npm-publish != 'false' && inputs.monorepo-private-npm-token != ''
+      run: |
+        PROJECT_ROOT=$(pwd)
+        declare -a PRIVATE_NPM_LIST=(${{ inputs.monorepo-private-npm-publish }})
+        for item in "${PRIVATE_NPM_LIST[@]}"; do
+          cd $PROJECT_ROOT
+          cd "$item"
           NPM_TOKEN=${{ inputs.monorepo-private-npm-token }}
           NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
           if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
@@ -176,8 +206,6 @@ runs:
         for item in "${PUBLIC_NPM_LIST[@]}"; do
           cd $PROJECT_ROOT
           cd "$item"
-          npm ci
-          npm run build
           npm config set "registry=https://registry.npmjs.org" --location=project
           npm config set "//registry.npmjs.org/:_authToken=${{ inputs.monorepo-public-npm-token }}" --location=project
           if  [ ${{ inputs.node-version }} == 16* ]; then npm config set "always-auth=true" --location=project; fi
