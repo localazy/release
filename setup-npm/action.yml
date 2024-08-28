@@ -37,10 +37,9 @@ runs:
 
     - run: |
         npm ci
-        npm config set registry https://registry.npmjs.org/ --location=project
+        rm .npmrc 2> /dev/null
         npm i -D conventional-changelog@5 conventional-changelog-cli@4 conventional-recommended-bump@9 @localazy/conventional-changelog-preset https://github.com/localazy/conventional-changelog-writer.git
-        rm .npmrc
-        git checkout .npmrc || true
+        git checkout .npmrc 2> /dev/null
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Run code after install ===\n"
