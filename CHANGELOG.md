@@ -1,3 +1,9 @@
+# 2.15.0 (2024-08-28)
+
+### ✨ Features
+
+- Change default private registry to npm ([2d518b2](https://github.com/localazy/release/commit/2d518b2))
+
 # 2.14.0 (2024-08-28)
 
 ### ✨ Features
