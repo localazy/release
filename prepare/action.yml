@@ -85,17 +85,15 @@ runs:
     - run: echo -e "\n${{env.blue}}=== Bump package.json version ===\n"
       shell: bash
 
-    - id: bump
+    - id: recommended-bump
       run: |
         BUMP_TYPE=$(npx conventional-recommended-bump -p @localazy/conventional-changelog-preset)
-        echo "bump-type=$BUMP_TYPE" >> "$GITHUB_OUTPUT"
-        PACKAGE_VERSION=$(node -p "require('./package.json').version")
-        echo "package-version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
+        echo "type=$BUMP_TYPE" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - if: inputs.monorepo-bump == 'false'
       run: |
-        npm version ${{ steps.bump.outputs.bump-type }} --git-tag-version false
+        npm version ${{ steps.recommended-bump.outputs.type }} --git-tag-version false
       shell: bash
 
     - if: inputs.monorepo-bump != 'false'
@@ -105,8 +103,14 @@ runs:
         for item in "${BUMP_LIST[@]}"; do
           cd $PROJECT_ROOT
           cd "$item"
-          npm version ${{ steps.bump.outputs.bump-type }} --git-tag-version false
+          npm version ${{ steps.recommended-bump.outputs.type }} --git-tag-version false
         done
+      shell: bash
+
+    - id: bump
+      run: |
+        PACKAGE_VERSION=$(node -p "require('./package.json').version")
+        echo "package-version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Generate changelog preview for PR ===\n"
