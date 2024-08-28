@@ -1,3 +1,13 @@
+# 2.13.0 (2024-08-28)
+
+### ✨ Features
+
+- Node 20 fix ([f5a4bfa](https://github.com/localazy/release/commit/f5a4bfa))
+
+### 🐛 Bug Fixes
+
+- Fix version for PR title and bump commit message ([149f24e](https://github.com/localazy/release/commit/149f24e))
+
 ## 2.12.3 (2024-08-26)
 
 ### 🧰 Other Commits
