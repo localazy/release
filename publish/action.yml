@@ -18,7 +18,7 @@ inputs:
   npm-private-registry:
     description: Private NPM registry.
     required: false
-    default: 'https://maven.localazy.com/repository/npm-private/'
+    default: 'https://npm.pkg.github.com'
 
   npm-token:
     description: NPM auth token.
