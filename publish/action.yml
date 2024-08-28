@@ -18,7 +18,7 @@ inputs:
   npm-private-registry:
     description: Private NPM registry.
     required: false
-    default: 'https://npm.pkg.github.com'
+    default: 'https://registry.npmjs.org'
 
   npm-token:
     description: NPM auth token.
