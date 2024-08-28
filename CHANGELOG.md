@@ -1,3 +1,9 @@
+# 2.14.0 (2024-08-28)
+
+### ✨ Features
+
+- Change default value for private registry ([588a87d](https://github.com/localazy/release/commit/588a87d))
+
 # 2.13.0 (2024-08-28)
 
 ### ✨ Features
