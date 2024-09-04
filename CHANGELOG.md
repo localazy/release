@@ -1,3 +1,9 @@
+## 2.15.1 (2024-09-04)
+
+### 🧰 Other Commits
+
+- Update setup-node action ([2104b9d](https://github.com/localazy/release/commit/2104b9d))
+
 # 2.15.0 (2024-08-28)
 
 ### ✨ Features
