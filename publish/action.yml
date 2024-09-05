@@ -143,8 +143,8 @@ runs:
         NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
         if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
         npm publish --registry=${{ inputs.npm-private-registry }}
-        rm .npmrc
-        git checkout .npmrc || true
+        rm .npmrc 2> /dev/null || true
+        git checkout .npmrc 2> /dev/null || true
       shell: bash
 
     - if: inputs.npm-publish == 'public'
@@ -157,8 +157,8 @@ runs:
         npm config set "//registry.npmjs.org/:_authToken=${{ inputs.npm-token }}" --location=project
         if  [ ${{ inputs.node-version }} == 16* ]; then npm config set "always-auth=true" --location=project; fi
         npm publish --access=public
-        rm .npmrc
-        git checkout .npmrc || true
+        rm .npmrc 2> /dev/null || true
+        git checkout .npmrc 2> /dev/null || true
       shell: bash
 
     - if: inputs.monorepo-npm-install != 'false'
@@ -194,8 +194,8 @@ runs:
           NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
           if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
           npm publish --registry=${{ inputs.npm-private-registry }}
-          rm .npmrc
-          git checkout .npmrc || true
+          rm .npmrc 2> /dev/null || true
+          git checkout .npmrc 2> /dev/null || true
         done
       shell: bash
 
@@ -210,8 +210,8 @@ runs:
           npm config set "//registry.npmjs.org/:_authToken=${{ inputs.monorepo-public-npm-token }}" --location=project
           if  [ ${{ inputs.node-version }} == 16* ]; then npm config set "always-auth=true" --location=project; fi
           npm publish --access=public
-          rm .npmrc
-          git checkout .npmrc || true
+          rm .npmrc 2> /dev/null || true
+          git checkout .npmrc 2> /dev/null || true
         done
       shell: bash
 

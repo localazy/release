@@ -37,9 +37,9 @@ runs:
 
     - run: |
         npm ci
-        rm .npmrc 2> /dev/null
+        rm .npmrc 2> /dev/null || true
         npm i -D conventional-changelog@5 conventional-changelog-cli@4 conventional-recommended-bump@9 @localazy/conventional-changelog-preset https://github.com/localazy/conventional-changelog-writer.git
-        git checkout .npmrc 2> /dev/null
+        git checkout .npmrc 2> /dev/null || true
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Run code after install ===\n"
