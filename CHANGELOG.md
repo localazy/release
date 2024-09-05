@@ -1,3 +1,9 @@
+## 2.15.2 (2024-09-05)
+
+### 🐛 Bug Fixes
+
+- Fix exit code 1 when .npmrc does not exist ([250716b](https://github.com/localazy/release/commit/250716b))
+
 ## 2.15.1 (2024-09-04)
 
 ### 🧰 Other Commits
