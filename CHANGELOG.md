@@ -1,3 +1,9 @@
+# 2.16.0 (2024-09-30)
+
+### ✨ Features
+
+- Fix publishing for private packages without .npmrc ([0631091](https://github.com/localazy/release/commit/0631091))
+
 ## 2.15.2 (2024-09-05)
 
 ### 🐛 Bug Fixes
