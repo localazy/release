@@ -137,19 +137,20 @@ runs:
     - if: inputs.badges == 'true'
       id: data
       run: |
+        $(echo "${{ inputs.badges-size-command }}")
+        $(echo "${{ inputs.badges-coverage-command }}")
+
         VERSION=$(${{ inputs.badges-version }})
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
         echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
         LICENSE=$(${{ inputs.badges-license }})
 
-        $(echo "${{ inputs.badges-coverage-command }}")
         echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
         COVERAGE=$(${{ inputs.badges-coverage }})
 
         if [ "${{ inputs.badges-size }}" != "" ]
         then
-          $(echo "${{ inputs.badges-size-command }}")
           SIZE=$(gzip -c ${{ inputs.badges-size }} | wc -c);
           echo "size=$SIZE" >> "$GITHUB_OUTPUT"
         fi

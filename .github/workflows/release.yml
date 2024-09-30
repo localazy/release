@@ -10,6 +10,7 @@ permissions:
   pull-requests: write
 
 jobs:
+  # TODO Add automatic commiting of potential changes in js actions (npm run build)
   ci:
     name: CI Init
     runs-on: [ self-hosted, Linux ]
