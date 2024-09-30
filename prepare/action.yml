@@ -33,8 +33,7 @@ inputs:
   badges-size:
     description: ''
     required: false
-    default: >
-      gzip -c dist/browser/localazy-cdn-client.umd.min.js | wc -c
+    default: ''
 
   badges-version:
     description: ''
@@ -138,18 +137,22 @@ runs:
     - if: inputs.badges == 'true'
       id: data
       run: |
-        $(echo "${{ inputs.badges-size-command }}")
-        $(echo "${{ inputs.badges-coverage-command }}")
-
         VERSION=$(${{ inputs.badges-version }})
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+        echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
         LICENSE=$(${{ inputs.badges-license }})
-        SIZE=$(${{ inputs.badges-size }})
+
+        $(echo "${{ inputs.badges-coverage-command }}")
+        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
         COVERAGE=$(${{ inputs.badges-coverage }})
 
-        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-        echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
-        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
-        echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+        if [ "${{ inputs.badges-size }}" != "" ]
+        then
+          $(echo "${{ inputs.badges-size-command }}")
+          SIZE=$(gzip -c ${{ inputs.badges-size }} | wc -c);
+          echo "size=$SIZE" >> "$GITHUB_OUTPUT"
+        fi
       shell: bash
 
     - if: inputs.badges == 'true'
