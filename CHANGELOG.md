@@ -1,3 +1,9 @@
+## 2.16.1 (2024-09-30)
+
+### 🐛 Bug Fixes
+
+- Fix grep exit code 1 ([6514f49](https://github.com/localazy/release/commit/6514f49))
+
 # 2.16.0 (2024-09-30)
 
 ### ✨ Features
