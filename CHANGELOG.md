@@ -1,3 +1,9 @@
+## 2.17.4 (2024-09-30)
+
+### 🐛 Bug Fixes
+
+- Fix empty badge ([57de4fd](https://github.com/localazy/release/commit/57de4fd))
+
 ## 2.17.3 (2024-09-30)
 
 ### 🐛 Bug Fixes
