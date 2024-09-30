@@ -1,3 +1,9 @@
+# 2.17.0 (2024-09-30)
+
+### ✨ Features
+
+- Make badges more configurable ([c79e77c](https://github.com/localazy/release/commit/c79e77c))
+
 ## 2.16.1 (2024-09-30)
 
 ### 🐛 Bug Fixes
