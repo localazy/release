@@ -141,7 +141,7 @@ runs:
       run: |
         NPM_TOKEN=${{ inputs.npm-token }}
         NODE_VERSION=${{ inputs.node-version }}
-        NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc)
+        NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc || true)
 
         if [ $NODE_VERSION == '20' ]
         then
