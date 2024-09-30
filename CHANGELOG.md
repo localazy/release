@@ -1,3 +1,9 @@
+## 2.17.1 (2024-09-30)
+
+### 🐛 Bug Fixes
+
+- Make the generated badges.json Prettier compliant ([6bb1916](https://github.com/localazy/release/commit/6bb1916))
+
 # 2.17.0 (2024-09-30)
 
 ### ✨ Features
