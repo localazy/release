@@ -157,6 +157,6 @@ export const generateBadges = (): void => {
 
   config.files.forEach(({ fileName, ...badgenOptions }: Badge): void => {
     const svg: string = badgen(badgenOptions);
-    outputFileSync(`${path}${fileName}`, svg);
+    outputFileSync(`${path}${fileName}`, `${svg}\n`);
   });
 };
