@@ -1,3 +1,9 @@
+## 2.17.2 (2024-09-30)
+
+### 🧰 Other Commits
+
+- Add compiled js commands ([185297a](https://github.com/localazy/release/commit/185297a))
+
 ## 2.17.1 (2024-09-30)
 
 ### 🐛 Bug Fixes
