@@ -143,11 +143,11 @@ runs:
         VERSION=$(${{ inputs.badges-version }})
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-        echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
         LICENSE=$(${{ inputs.badges-license }})
+        echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
 
-        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
         COVERAGE=$(${{ inputs.badges-coverage }})
+        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
 
         if [ "${{ inputs.badges-size }}" != "" ]
         then
