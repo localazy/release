@@ -12,6 +12,11 @@ inputs:
     required: false
     default: '16'
 
+  node-version-file:
+    description: Node version file.
+    required: false
+    default: ''
+
 runs:
   using: composite
   steps:
@@ -29,8 +34,14 @@ runs:
       shell: bash
 
     - uses: actions/setup-node@v4
+      if: inputs.node-version-file == ''
       with:
         node-version: ${{ inputs.node-version }}
+
+    - uses: actions/setup-node@v4
+      if: inputs.node-version-file != ''
+      with:
+        node-version-file: ${{ inputs.node-version-file }}
 
     - run: echo -e "\n${{env.blue}}=== Install dependencies ===\n"
       shell: bash

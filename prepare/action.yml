@@ -20,6 +20,11 @@ inputs:
     required: false
     default: '16'
 
+  node-version-file:
+    description: Node version file.
+    required: false
+    default: ''
+
   badges:
     description: Generate badges.
     required: false
@@ -71,6 +76,7 @@ runs:
       with:
         run-after-install: ${{ inputs.run-after-install }}
         node-version: ${{ inputs.node-version }}
+        node-version-file: ${{ inputs.node-version-file }}
 
     - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
       shell: bash
