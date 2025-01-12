@@ -1,3 +1,9 @@
+# 2.18.0 (2025-01-12)
+
+### ✨ Features
+
+- Add support for node-version-file ([1edc66a](https://github.com/localazy/release/commit/1edc66a))
+
 ## 2.17.4 (2024-09-30)
 
 ### 🐛 Bug Fixes
