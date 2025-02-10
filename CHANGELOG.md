@@ -1,3 +1,9 @@
+## 2.18.1 (2025-02-10)
+
+### 🧰 Other Commits
+
+- Remove Node 16 hacks ([3d529a7](https://github.com/localazy/release/commit/3d529a7))
+
 # 2.18.0 (2025-01-12)
 
 ### ✨ Features
