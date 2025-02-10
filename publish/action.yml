@@ -146,15 +146,9 @@ runs:
     - if: inputs.npm-publish == 'private'
       run: |
         NPM_TOKEN=${{ inputs.npm-token }}
-        NODE_VERSION=${{ inputs.node-version }}
         NPMRC_AUTH_EXISTS=$(grep -c _auth .npmrc || true)
 
-        if [ $NODE_VERSION == '20' ]
-        then
-          if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN --location=project; fi
-        else
-          if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set _auth=$NPM_TOKEN --location=project; fi
-        fi
+        if [ ${NPMRC_AUTH_EXISTS:-0} == 0 ] && [ $NPM_TOKEN != '' ]; then npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN --location=project; fi
 
         npm publish --registry=${{ inputs.npm-private-registry }}
         rm .npmrc 2> /dev/null || true
