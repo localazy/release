@@ -14,7 +14,7 @@
 
 ### 🐛 Bug Fixes
 
-- Call badge commands prior to data aggregation ([1274e6c](https://github.com/localazy/release/commit/1274e6c))
+- Call badge commands prior to text aggregation ([1274e6c](https://github.com/localazy/release/commit/1274e6c))
 
 ## 2.17.2 (2024-09-30)
 
