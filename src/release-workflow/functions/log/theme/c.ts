@@ -13,6 +13,7 @@ const tableRowBorder = chalk.hex('#302d2d');
 // Shell
 const shellCommandArrow = chalk.hex('#4a5e75');
 const shellCommand = chalk.hex('#67a0d7');
+const shellArgs = chalk.hex('#374961');
 const shellOutput = chalk.hex('#bbbbbb');
 const shellOutputError = chalk.hex('#d33f3f');
 const shellNoOutput = chalk.hex('#302d2d');
@@ -29,6 +30,8 @@ const error = chalk.hex('#d9534f');
 const commitCategory = chalk.hex('#e3a72f');
 const commitMessage = chalk.hex('#bbbbbb');
 
+const nextStep = chalk.bold.hex('#345fbd');
+
 export const c = {
   boxBorder,
   boxLabel,
@@ -36,6 +39,7 @@ export const c = {
   tableRowBorder,
   shellCommandArrow,
   shellCommand,
+  shellArgs,
   shellOutput,
   shellOutputError,
   shellNoOutput,
@@ -46,4 +50,5 @@ export const c = {
   error,
   commitCategory,
   commitMessage,
+  nextStep,
 };

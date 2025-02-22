@@ -11,7 +11,7 @@ export const config = {
       },
     },
     iconWidth: 3,
-    minWidth: 46,
+    minWidth: 60,
   },
   shell: {
     padding: {
@@ -19,10 +19,10 @@ export const config = {
       right: 1,
     },
     iconWidth: 3,
-    minWidth: 46,
+    minWidth: 60,
   },
   categorizedCommits: {
-    minWidth: 46,
+    minWidth: 60,
   },
   parts: {
     topLeft: '╭',

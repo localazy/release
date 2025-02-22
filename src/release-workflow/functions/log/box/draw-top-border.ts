@@ -1,5 +1,4 @@
 import { c } from '../theme/c';
-
 import { IDrawTopBorderOptions } from '../../../model/log/box/i-draw-top-border-options';
 import { config } from '../theme/config';
 

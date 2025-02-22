@@ -1,6 +1,6 @@
-import { ParsedCommitType } from '../utils/commit/parsed-commit-type';
-import { CategorizedCommitsType } from '../utils/commit/categorized-commits-type';
+import { GitCommitType } from '../git/git-commit-type';
+import { CategorizedCommitsType } from '../git/commit/categorized-commits-type';
 
 export interface ILogCategorizedCommitsOptions {
-  categorizedCommits: Record<CategorizedCommitsType, ParsedCommitType[]>;
+  categorizedCommits: Record<CategorizedCommitsType, GitCommitType[]>;
 }

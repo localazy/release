@@ -1,10 +1,11 @@
 import { runShell } from './shell/run-shell';
 
 export async function publishPrereleaseCommand(): Promise<string | null> {
-  const result = await runShell({
+  const output = await runShell({
     text: 'Publish pre-release version',
-    cmd: 'npm version patch --no-git-tag-version',
+    cmd: 'npm version patch',
+    args: ['--no-git-tag-version'],
   });
 
-  return result.exitCode !== 0 ? null : result.value;
+  return output.exitCode !== 0 ? null : output.value;
 }

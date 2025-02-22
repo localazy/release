@@ -1,5 +1,5 @@
-import { ParsedCommitType } from '../../utils/commit/parsed-commit-type';
+import { GitCommitType } from '../../git/git-commit-type';
 
 export interface IGetCommitLinesOptions {
-  commits: ParsedCommitType[];
+  commits: GitCommitType[];
 }

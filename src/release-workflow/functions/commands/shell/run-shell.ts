@@ -11,7 +11,7 @@ import { logger } from '../../log/logger';
 import { c } from '../../log/theme/c';
 import { config } from '../../log/theme/config';
 
-export function runShell({ cmd, text }: IRunShellOptions): Promise<IRunShellResult> {
+export function runShell({ cmd, args, text }: IRunShellOptions): Promise<IRunShellResult> {
   return new Promise((resolve, reject) => {
     const width = config.shell.padding.left + config.shell.iconWidth + text.length + config.shell.padding.right;
     const boxWidth = Math.max(width, config.shell.minWidth);
@@ -22,10 +22,9 @@ export function runShell({ cmd, text }: IRunShellOptions): Promise<IRunShellResu
         theme: { text: c.tableTitle },
       }),
     );
-    logger(formatShellCommand({ cmd }));
+    logger(formatShellCommand({ cmd, args }));
 
-    const [command, ...args] = cmd.split(' ');
-    const subprocess = spawn(command, args, { stdio: 'pipe', shell: true });
+    const subprocess = spawn(cmd, args || [], { stdio: 'pipe', shell: true });
     const out: IShellOutputData[] = [];
 
     subprocess.stdout?.on('data', (rawData) => {

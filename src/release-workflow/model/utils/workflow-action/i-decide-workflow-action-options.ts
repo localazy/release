@@ -1,5 +1,7 @@
-import { ICommandContext } from '../../commands/context/i-command-context';
+import { IDetermineVersionIncreaseTaskOutput } from '../../tasks/i-determine-version-increase-task-output';
 
 export interface IDecideWorkflowActionOptions {
-  ctx: ICommandContext;
+  stabilityLevel: IDetermineVersionIncreaseTaskOutput['stabilityLevel'];
+  switchingVersionStability: IDetermineVersionIncreaseTaskOutput['switchingVersionStability'];
+  versionIncrease: IDetermineVersionIncreaseTaskOutput['versionIncrease'];
 }

@@ -1,10 +1,11 @@
 import { runShell } from './shell/run-shell';
 
 export async function increasePrereleaseCommand() {
-  const result = await runShell({
+  const output = await runShell({
     text: 'Increase pre-release version',
-    cmd: 'npm version prerelease --no-git-tag-version',
+    cmd: 'npm version prerelease',
+    args: ['--no-git-tag-version'],
   });
 
-  return result.exitCode !== 0 ? null : result.value;
+  return output.exitCode !== 0 ? null : output.value;
 }

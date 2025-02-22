@@ -1,15 +1,16 @@
 import { readFile } from 'node:fs/promises';
-import { ICommandContext } from '../../../model/commands/context/i-command-context';
+import { IPackageJson } from '../../../model/commands/context/i-package-json';
+import { logger } from '../../log/logger';
 
-export async function readPackageJson(): Promise<ICommandContext['pkg']> {
+export async function readPackageJson(): Promise<IPackageJson> {
   try {
+    logger('Reading package.json');
     const packageJson = JSON.parse(await readFile('./package.json', 'utf8'));
     return {
       name: packageJson.name,
       version: packageJson.version,
     };
-  } catch (error) {
-    console.error('Error reading package.json:', error);
-    throw error;
+  } catch (err: unknown) {
+    throw new Error('Error reading package.json', { cause: err });
   }
 }

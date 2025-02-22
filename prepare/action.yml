@@ -72,30 +72,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: localazy/release/setup-npm@v2
-      with:
-        run-after-install: ${{ inputs.run-after-install }}
-        node-version: ${{ inputs.node-version }}
-        node-version-file: ${{ inputs.node-version-file }}
-
-    - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
-      shell: bash
-
-    - id: auth
-      uses: tibdex/github-app-token@v2
-      with:
-        app_id: ${{ inputs.app-id }}
-        private_key: ${{ inputs.app-key }}
-
-    - run: echo -e "\n${{env.blue}}=== Bump package.json version ===\n"
-      shell: bash
-
-    - id: recommended-bump
-      run: |
-        BUMP_TYPE=$(npx conventional-recommended-bump -p @localazy/conventional-changelog-preset)
-        echo "type=$BUMP_TYPE" >> "$GITHUB_OUTPUT"
-      shell: bash
-
     - if: inputs.monorepo-bump == 'false'
       run: |
         npm version ${{ steps.recommended-bump.outputs.type }} --git-tag-version false
@@ -110,12 +86,6 @@ runs:
           cd "$item"
           npm version ${{ steps.recommended-bump.outputs.type }} --git-tag-version false
         done
-      shell: bash
-
-    - id: bump
-      run: |
-        PACKAGE_VERSION=$(node -p "require('./package.json').version")
-        echo "package-version=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Generate changelog preview for PR ===\n"
@@ -169,12 +139,6 @@ runs:
         license: ${{ steps.rows.outputs.license }}
         coverage: ${{ steps.rows.outputs.coverage }}
         size: ${{ steps.rows.outputs.size }}
-
-    - run: echo -e "\n${{env.blue}}=== Clean changelog npm deps ===\n"
-      shell: bash
-
-    - run: npm r conventional-changelog conventional-changelog-cli conventional-recommended-bump @localazy/conventional-changelog-preset conventional-changelog-writer
-      shell: bash
 
     - run: echo -e "\n${{env.blue}}=== Prepare release branch and create PR ===\n"
       shell: bash

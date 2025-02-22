@@ -93,32 +93,6 @@ outputs:
 runs:
   using: composite
   steps:
-    - uses: localazy/release/setup-npm@v2
-      with:
-        run-after-install: ${{ inputs.run-after-install }}
-        node-version: ${{ inputs.node-version }}
-        node-version-file: ${{ inputs.node-version-file }}
-
-    - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
-      shell: bash
-
-    - id: auth
-      uses: tibdex/github-app-token@v2
-      with:
-        app_id: ${{ inputs.app-id }}
-        private_key: ${{ inputs.app-key }}
-
-    - run: echo -e "\n${{env.blue}}=== Read package.json version ===\n"
-      shell: bash
-
-    - id: version
-      run: |
-        PACKAGE_VERSION=$(node -p "require('./package.json').version")
-        echo "package=$PACKAGE_VERSION" >> "$GITHUB_OUTPUT"
-        MAJOR_VERSION=${PACKAGE_VERSION%%.*}
-        echo "major=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
-      shell: bash
-
     - run: echo -e "\n${{env.blue}}=== Generate changelog for GitHub release ===\n"
       shell: bash
 

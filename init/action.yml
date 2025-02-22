@@ -1,24 +1,37 @@
-name: CI Init
+name: Localazy CI/CD Initializer
 description: 'Decides whether to run "prepare" or "publish" job.'
 
-outputs:
-  # TODO rename `action` to `job` in v3 release
-  action:
-    description: 'Detected job. Possible values "prepare" or "publish".'
-    value: ${{ steps.detect.outputs.job }}
+inputs:
+  run-after-install:
+    description: Bash code to run after npm install.
+    required: false
+    default: ''
 
 runs:
   using: composite
   steps:
-    - run: echo "blue=\033[1;34m" >> $GITHUB_ENV
-      shell: bash
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - run: echo -e "\n${{env.blue}}=== Detect next job ===\n"
-      shell: bash
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
 
-    - id: detect
+#    - name: Setup GitHub App Token
+#      uses: tibdex/github-app-token@v2
+#      id: auth
+#      with:
+#        app_id: ${{ inputs.app-id }}
+#        private_key: ${{ inputs.app-key }}
+
+    - name: Setup Git User
+      uses: fregante/setup-git-user@v2
+
+    - if: inputs.run-after-install != ''
       run: |
-        IS_RELEASE=${{ github.event.head.ref == 'release' || startsWith(github.event.commits[0].message, '🚀 release:') }}
-        if [ $IS_RELEASE == "true" ]; then echo "job=publish" >> "$GITHUB_OUTPUT" ; echo "Executing PUBLISH job" ; fi
-        if [ $IS_RELEASE == "false" ]; then echo "job=prepare" >> "$GITHUB_OUTPUT" ; echo "Executing PREPARE job" ; fi
+        echo -e "\n=== Run code after install ===\n"
+        eval ${{ inputs.run-after-install }}
       shell: bash

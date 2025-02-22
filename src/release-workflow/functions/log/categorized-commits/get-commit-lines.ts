@@ -7,7 +7,7 @@ export function getCommitLines({ commits }: IGetCommitLinesOptions) {
 
   if (commits.length) {
     commits.forEach((commit) => {
-      lines.push(formatBoxLine({ text: commit.commit.message, textColor: c.commitMessage }));
+      lines.push(formatBoxLine({ text: commit.message, textColor: c.commitMessage }));
     });
   } else {
     lines.push(formatBoxLine({ text: '( no commits )', textColor: c.shellNoOutput }));

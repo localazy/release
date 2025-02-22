@@ -1,3 +1,6 @@
-import { releaseCi } from './release-ci';
+import { handleException } from './functions/utils/error/handle-exception';
+import { releaseWorkflow } from './release-workflow';
 
-releaseCi().catch((error) => console.error('Error in releaseCi:', error));
+releaseWorkflow().catch((err: unknown) => {
+  handleException({ err });
+});

@@ -1,12 +1,21 @@
-import { IGetCommitsSinceTagOptions } from '../../../model/octokit/api/i-get-commits-since-tag-options';
-import { ParsedCommitType } from '../../../model/utils/commit/parsed-commit-type';
-import { parseCommitMessage } from '../../utils/commit/commit-message/parse-commit-message';
-import { parseCommitType } from '../../utils/commit/commit-message/parse-commit-type';
+import { IFetchCommitsSinceTagOptions } from '../../../model/octokit/api/i-fetch-commits-since-tag-options';
+import { OctokitCommit } from '../../../model/octokit/octokit-commit';
+import { logger } from '../../log/logger';
 
 export async function fetchCommitsSinceTag({
-  ctx: { octokit, owner, repo, branch, latestTag },
-}: IGetCommitsSinceTagOptions): Promise<ParsedCommitType[]> {
+  octokit,
+  owner,
+  repo,
+  branch,
+  latestTag,
+}: IFetchCommitsSinceTagOptions): Promise<OctokitCommit[]> {
   try {
+    if (latestTag === null) {
+      throw new Error('Latest tag is null');
+    }
+
+    logger(`Fetching commits since the latest tag: ${latestTag.name}`);
+
     const { data } = await octokit.repos.compareCommits({
       owner,
       repo,
@@ -14,17 +23,8 @@ export async function fetchCommitsSinceTag({
       head: branch,
     });
 
-    return data.commits.map((commit) => {
-      const parsedMessage = parseCommitMessage(commit);
-      const semver = parseCommitType(parsedMessage);
-      return {
-        ...commit,
-        parsedMessage,
-        semver,
-      };
-    });
-  } catch (error) {
-    console.error('Error fetching commits:', error);
-    return [];
+    return data.commits;
+  } catch (err: unknown) {
+    throw new Error('Error fetching commits since tag', { cause: err });
   }
 }

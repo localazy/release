@@ -155,7 +155,7 @@ jobs:
 | `AUTH_APP_KEY`   | `Localazy CI Auth` app private key |
 | `NPM_AUTH_TOKEN` | NPM authorization token            |
 
-### Action `localazy/release/init@v2`
+### VersionChange `localazy/release/init@v2`
 
 ###### Outputs
 
@@ -163,7 +163,7 @@ jobs:
 |-------------|-------------------------------------------------------|
 | `action`    | Detected job. Possible values `prepare` or `publish`. |
 
-### Action `localazy/release/prepare@v2`
+### VersionChange `localazy/release/prepare@v2`
 
 ###### Inputs
 
@@ -174,7 +174,7 @@ jobs:
 | `run-after-install` | Bash code to run after npm install. | `false`  | `""`    |
 | `node-version`      | Node version.                       | `false`  | `16`    |
 
-### Action `localazy/release/publish@v2`
+### VersionChange `localazy/release/publish@v2`
 
 ###### Inputs
 
@@ -193,7 +193,7 @@ jobs:
 
 <small>[1]</small> `"https://maven.localazy.com/repository/npm-private/"`
 
-### Action `localazy/release/setup-npm@v2`
+### VersionChange `localazy/release/setup-npm@v2`
 
 This action is internal, it's called by `localazy/release/prepare` and `localazy/release/publish`.
 

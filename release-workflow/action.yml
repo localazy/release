@@ -1,0 +1,59 @@
+name: Release Workflow
+description: ''
+
+inputs:
+  app-id:
+    description: GitHub app id.
+    required: true
+
+  app-key:
+    description: GitHub app private key.
+    required: true
+
+  run-after-install:
+    description: Bash code to run after npm install.
+    required: false
+    default: ''
+
+  badges:
+    description: Generate badges.
+    required: false
+
+  badges-coverage:
+    description: Command to get coverage percentage.
+    required: false
+    default: >
+      node -p "require('./coverage/coverage-summary.json').total.lines.pct"
+
+  badges-size:
+    description: Generate size badge.
+    required: false
+    default: ''
+
+  badges-version:
+    description: Command to get package version.
+    required: false
+    default: >
+      node -p "require('./package.json').version"
+
+  badges-license:
+    description: Command to get package license.
+    required: false
+    default: >
+      node -p "require('./package.json').license"
+
+  badges-size-command:
+    description: Command to get package size.
+    required: false
+    default: >
+      npm run build
+
+  badges-coverage-command:
+    description: Command to get coverage percentage.
+    required: false
+    default: >
+      npm run test:coverage
+
+runs:
+  using: 'node20'
+  main: './dist/index.js'

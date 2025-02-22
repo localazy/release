@@ -1,10 +1,11 @@
 import { runShell } from './shell/run-shell';
 
 export async function patchIncreaseCommand(): Promise<string | null> {
-  const result = await runShell({
+  const output = await runShell({
     text: 'Increase patch version',
-    cmd: 'npm version patch --no-git-tag-version',
+    cmd: 'npm version patch',
+    args: ['--no-git-tag-version'],
   });
 
-  return result.exitCode !== 0 ? null : result.value;
+  return output.exitCode !== 0 ? null : output.value;
 }

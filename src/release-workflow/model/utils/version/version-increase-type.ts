@@ -1,3 +1,3 @@
-import { CommitDefinitionType } from '../commit/commit-definition-type';
+import { SemverDefinitionType } from '../../git/semver/semver-definition-type';
 
-export type VersionIncreaseType = CommitDefinitionType['versionIncrease'];
+export type VersionIncreaseType = Extract<SemverDefinitionType['versionIncrease'], 'patch' | 'minor' | 'major'>;

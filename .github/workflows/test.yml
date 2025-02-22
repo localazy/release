@@ -7,8 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: fregante/setup-git-user@v2
-      - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - uses: "./release-ci"
+          fetch-depth: 0
+
+      - uses: "./init"
+
+      - uses: "./release-workflow"

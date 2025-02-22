@@ -1,10 +1,11 @@
 import { runShell } from './shell/run-shell';
 
 export async function majorIncreaseCommand() {
-  const result = await runShell({
+  const output = await runShell({
     text: 'Increase major version',
-    cmd: 'npm version major --no-git-tag-version',
+    cmd: 'npm version major',
+    args: ['--no-git-tag-version'],
   });
 
-  return result.exitCode !== 0 ? null : result.value;
+  return output.exitCode !== 0 ? null : output.value;
 }
