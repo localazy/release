@@ -22,6 +22,8 @@ export async function prepareReleasePrTask(ctx: MainContextType) {
 
     if (isTaskPresent(ctx, 'generate-changelog')) {
       setOutput('changelog-pr', ctx['generate-changelog'].output.prChangelog);
+      // TODO changelog-github-release
+      setOutput('changelog-github-release', ctx['generate-changelog'].output.prChangelog);
     }
 
     setOutput('next-action', 'create-pull-request');

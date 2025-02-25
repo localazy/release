@@ -53,6 +53,9 @@ outputs:
   changelog-pr:
     description: 'Changelog for pull request.'
 
+  changelog-github-release:
+    description: 'Changelog for GitHub release.'
+
   next-action:
     description: 'Next step. Possible values: "prepare" or "publish".'
 

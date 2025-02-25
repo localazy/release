@@ -24,7 +24,7 @@ jobs:
         uses: ./cd-release
         with:
           token: ${{ steps.setup.outputs.token }}
-          package-version: ${{ steps.version-management.outputs.version }}
+          package-version: ${{ steps.version-management.outputs.package-version }}
           changelog-pr: ${{ steps.version-management.outputs.changelog-pr }}
           changelog-github-release: ${{ steps.version-management.outputs.changelog-github-release }}
           next-action: ${{ steps.version-management.outputs.next-action }}
