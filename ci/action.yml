@@ -30,12 +30,6 @@ runs:
       id: ci
       uses: ./release-ci
 
-    - if: "!env.ACT"
-      name: NOT ACT
-      shell: bash
-      run: |
-        echo "NOT ACT"
-
     - name: verify outputs
       shell: bash
       run: |
@@ -45,15 +39,15 @@ runs:
         echo "changelog-pr:"
         echo "${{ steps.ci.outputs.changelog-pr }}"
 
-#    - if: "!env.ACT"
-#      name: Create Release PR
-#      uses: peter-evans/create-pull-request@v6
-#      with:
-#        token: ${{ steps.setup.outputs.token }}
-#        branch: release
-#        base: wip_pr_target
-#        delete-branch: 'false'
-#        labels: release-preview
-#        commit-message: "🚀 release: ${{ steps.ci.outputs.package-version }}"
-#        title: ${{ steps.ci.outputs.package-version }}
-#        body: ${{ steps.ci.outputs.changelog-pr }}
+    - if: "!env.ACT"
+      name: Create Release PR
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ steps.setup.outputs.token }}
+        branch: release
+        base: wip_pr_target
+        delete-branch: 'false'
+        labels: release-preview
+        commit-message: "🚀 release: ${{ steps.ci.outputs.package-version }}"
+        title: ${{ steps.ci.outputs.package-version }}
+        body: ${{ steps.ci.outputs.changelog-pr }}
