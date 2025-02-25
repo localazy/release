@@ -1,0 +1,51 @@
+name: Setup CI
+description: Checkout repository, setup Node, setup GitHub App Token, setup Git User and run after setup.
+
+inputs:
+  app-id:
+    description: GitHub app id.
+    required: true
+
+  app-key:
+    description: GitHub app private key.
+    required: true
+
+  run-after-setup:
+    description: Bash code to run after setup.
+    required: false
+    default: ''
+
+outputs:
+  token:
+    description: 'GitHub app token.'
+    value: ${{ steps.auth.outputs.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+
+    - if: "!env.ACT"
+      name: Setup GitHub App Token
+      uses: tibdex/github-app-token@v2
+      id: auth
+      with:
+        app_id: ${{ inputs.app-id }}
+        private_key: ${{ inputs.app-key }}
+
+    - name: Setup Git User
+      uses: fregante/setup-git-user@v2
+
+    - if: inputs.run-after-setup != ''
+      name: Run after setup
+      run: |
+        eval ${{ inputs.run-after-setup }}
+      shell: bash

@@ -18,36 +18,17 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    - name: Setup CI
+      id: setup
+      uses: ./setup
       with:
-        fetch-depth: 0
-
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version-file: .nvmrc
-
-    - if: "!env.ACT"
-      name: Setup GitHub App Token
-      uses: tibdex/github-app-token@v2
-      id: auth
-      with:
-        app_id: ${{ inputs.app-id }}
-        private_key: ${{ inputs.app-key }}
-
-    - name: Setup Git User
-      uses: fregante/setup-git-user@v2
-
-    - if: inputs.run-after-setup != ''
-      name: Run after setup
-      run: |
-        eval ${{ inputs.run-after-setup }}
-      shell: bash
+        app-id: ${{ inputs.app-id }}
+        app-key: ${{ inputs.app-key }}
+        run-after-setup: ${{ inputs.run-after-setup }}
 
     - name: Release CI
-      uses: ./release-ci
       id: ci
+      uses: ./release-ci
 
     - name: verify outputs
       shell: bash
@@ -57,15 +38,15 @@ runs:
         echo "changelog-pr:"
         echo "${{ steps.ci.outputs.changelog-pr }}"
 
-#    - if: "!env.ACT"
-#      name: Create Release PR
-#      uses: peter-evans/create-pull-request@v6
-#      with:
-#        token: ${{ steps.setup.outputs.token }}
-#        branch: release
-#        base: wip_pr_target
-#        delete-branch: false
-#        labels: release-preview
-#        commit-message: "🚀 release: ${{ steps.ci.outputs.package-version }}"
-#        title: ${{ steps.ci.outputs.package-version }}
-#        body: ${{ steps.ci.outputs.changelog-pr }}
+    - if: "!env.ACT"
+      name: Create Release PR
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ steps.setup.outputs.token }}
+        branch: release
+        base: wip_pr_target
+        delete-branch: 'false'
+        labels: release-preview
+        commit-message: "🚀 release: ${{ steps.ci.outputs.package-version }}"
+        title: ${{ steps.ci.outputs.package-version }}
+        body: ${{ steps.ci.outputs.changelog-pr }}
