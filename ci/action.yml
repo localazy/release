@@ -10,15 +10,40 @@ inputs:
     description: GitHub app private key.
     required: true
 
+  run-after-setup:
+    description: Bash code to run after setup.
+    required: false
+    default: ''
+
 runs:
   using: composite
   steps:
-    - name: CI Setup
-      uses: ./setup
-      id: setup
+    - name: Checkout repository
+      uses: actions/checkout@v4
       with:
-        app-id: ${{ inputs.app-id }}
-        app-key: ${{ inputs.app-key }}
+        fetch-depth: 0
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+
+    - if: "!env.ACT"
+      name: Setup GitHub App Token
+      uses: tibdex/github-app-token@v2
+      id: auth
+      with:
+        app_id: ${{ inputs.app-id }}
+        private_key: ${{ inputs.app-key }}
+
+    - name: Setup Git User
+      uses: fregante/setup-git-user@v2
+
+    - if: inputs.run-after-setup != ''
+      name: Run after setup
+      run: |
+        eval ${{ inputs.run-after-setup }}
+      shell: bash
 
     - name: Release CI
       uses: ./release-ci
@@ -37,6 +62,8 @@ runs:
 #      with:
 #        token: ${{ steps.setup.outputs.token }}
 #        branch: release
+#        base: wip_pr_target
+#        delete-branch: 'false'
 #        labels: release-preview
 #        commit-message: "🚀 release: ${{ steps.ci.outputs.package-version }}"
 #        title: ${{ steps.ci.outputs.package-version }}
