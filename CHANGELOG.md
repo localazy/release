@@ -1,3 +1,23 @@
+## 2.19.0 (2025-02-25)
+
+### ✨ Features
+
+- new ([f3b3569]()
+### 🧰 Other Commits
+
+- changes 6 ([60a76d5]()
+- changes 4 ([5946354]()
+- changes 9 ([e0f9d94]()
+- changes 8 ([87f471a]()
+- changes 1 ([0be4de6]()
+- changes 8 ([33c26ff]()
+- changes 1 ([8e5df17]()
+- changes 6 ([a077787]()
+- changes 1 ([40ecac5]()
+- Cleaning old actions ([0884aab]()
+- WIP ([796833d]()
+- Remove Node 16 hacks ([3d529a7]()
+
 ## 2.18.0 (2025-02-25)
 
 ### ✨ Features
