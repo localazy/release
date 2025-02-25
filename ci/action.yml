@@ -30,6 +30,12 @@ runs:
       id: ci
       uses: ./release-ci
 
+    - if: "!env.ACT"
+      name: NOT ACT
+      shell: bash
+      run: |
+        echo "NOT ACT"
+
     - name: verify outputs
       shell: bash
       run: |
