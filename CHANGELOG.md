@@ -1,3 +1,14 @@
+## 2.18.0 (2025-02-25)
+
+### ✨ Features
+
+- new ([f3b3569]()
+### 🧰 Other Commits
+
+- Cleaning old actions ([0884aab]()
+- WIP ([796833d]()
+- Remove Node 16 hacks ([3d529a7]()
+
 # 2.18.0 (2025-01-12)
 
 ### ✨ Features
@@ -14,7 +25,7 @@
 
 ### 🐛 Bug Fixes
 
-- Call badge commands prior to data aggregation ([1274e6c](https://github.com/localazy/release/commit/1274e6c))
+- Call badge commands prior to text aggregation ([1274e6c](https://github.com/localazy/release/commit/1274e6c))
 
 ## 2.17.2 (2024-09-30)
 
