@@ -1,0 +1,43 @@
+name: Localazy CI
+description: ''
+
+inputs:
+  app-id:
+    description: GitHub app id.
+    required: true
+
+  app-key:
+    description: GitHub app private key.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: CI Setup
+      uses: ./setup
+      id: setup
+      with:
+        app-id: ${{ inputs.app-id }}
+        app-key: ${{ inputs.app-key }}
+
+    - name: Release CI
+      uses: ./release-ci
+      id: ci
+
+    - name: verify outputs
+      shell: bash
+      run: |
+        echo "package-version:"
+        echo "${{ steps.ci.outputs.package-version }}"
+        echo "changelog-pr:"
+        echo "${{ steps.ci.outputs.changelog-pr }}"
+
+#    - name: Create Release PR
+#      uses: peter-evans/create-pull-request@v6
+#      with:
+#        token: ${{ steps.setup.outputs.token }}
+#        branch: release
+#        labels: release-preview
+#        commit-message: "🚀 release: ${{ steps.ci.outputs.package-version }}"
+#        title: ${{ steps.ci.outputs.package-version }}
+#        body: ${{ steps.ci.outputs.changelog-pr }}

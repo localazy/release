@@ -1,10 +1,12 @@
+import { setOutput } from '@actions/core';
+import { isTaskPresent } from './functions/tasks/is-task-present';
 import { MainContextType } from './model/tasks/main-context-type';
 import { prepareReleasePrTask } from './functions/tasks/prepare-release-pr-task';
 import { productionReleaseTask } from './functions/tasks/production-release-task';
 import { chooseWorkflowTask } from './functions/tasks/choose-workflow-task';
 import { scanGitBranchTask } from './functions/tasks/scan-git-branch-task';
 
-export async function releaseWorkflow() {
+export async function releaseCiAction() {
   try {
     const ctx: MainContextType = {};
     // startGroup('⚙️ Workflow Run Details');

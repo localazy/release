@@ -1,5 +1,5 @@
-import { createOctokitCommit } from '../../../src/release-workflow/functions/octokit/create-octokit-commit';
-import { createOctokitTag } from '../../../src/release-workflow/functions/octokit/create-octokit-tag';
+import { createOctokitCommit } from '../../../src/release-ci/functions/octokit/create-octokit-commit';
+import { createOctokitTag } from '../../../src/release-ci/functions/octokit/create-octokit-tag';
 
 export const fixtures = {
   patch: {

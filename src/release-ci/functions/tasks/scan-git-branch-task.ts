@@ -1,7 +1,6 @@
-import { endGroup, startGroup } from '@actions/core';
 import { logCategorizedCommits } from '../log/log-categorized-commits';
 import { logList } from '../log/log-list';
-import { logger } from '../log/logger';
+import { endGroup, logger, startGroup } from '../log/logger';
 import { MainContextType } from '../../model/tasks/main-context-type';
 import { gitGetCommits } from '../git/git-get-commits';
 import { gitGetCommitsSinceLatestTag } from '../git/git-get-commits-since-latest-tag';

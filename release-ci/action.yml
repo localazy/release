@@ -1,15 +1,7 @@
-name: Release Workflow
+name: Localazy Release CI
 description: ''
 
 inputs:
-  app-id:
-    description: GitHub app id.
-    required: true
-
-  app-key:
-    description: GitHub app private key.
-    required: true
-
   run-after-install:
     description: Bash code to run after npm install.
     required: false
@@ -53,6 +45,13 @@ inputs:
     required: false
     default: >
       npm run test:coverage
+
+outputs:
+  package-version:
+    description: 'Package version.'
+
+  changelog-pr:
+    description: 'Changelog for pull request.'
 
 runs:
   using: 'node20'

@@ -1,6 +1,6 @@
 import { handleException } from './functions/utils/error/handle-exception';
-import { releaseWorkflow } from './release-workflow';
+import { releaseCiAction } from './release-ci-action';
 
-releaseWorkflow().catch((err: unknown) => {
+releaseCiAction().catch((err: unknown) => {
   handleException({ err });
 });
