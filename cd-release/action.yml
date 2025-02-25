@@ -26,7 +26,7 @@ runs:
   using: composite
   steps:
     - if: "inputs.next-action == 'create-pull-request' && !env.ACT"
-      name: Create Release PR
+      name: Create Pull Request
       uses: peter-evans/create-pull-request@v6
       with:
         token: ${{ inputs.token }}
