@@ -1,5 +1,5 @@
-import { c } from '../theme/c';
-import { config } from '../theme/config';
+import { c } from '../../../const/theme/c';
+import { config } from '../../../const/theme/config';
 import { IFormatBoxFooterOptions } from '../../../model/log/box/i-format-box-footer-options';
 
 export function formatBoxHeaderLine({ boxWidth }: IFormatBoxFooterOptions) {

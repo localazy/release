@@ -1,5 +1,5 @@
 import { IFormatTableRowOptions } from '../../../model/log/table/i-format-table-row-options';
-import { c } from '../theme/c';
+import { c } from '../../../const/theme/c';
 
 export function formatTableRow({
   row: { icon, label, value },

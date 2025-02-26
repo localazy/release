@@ -35,4 +35,4 @@ export const config = {
     smallCircle: '•',
     circle: '●',
   },
-};
+} as const;

@@ -1,6 +1,6 @@
 import { IShellOutputData } from '../../../model/log/box/i-shell-output-data';
-import { c } from '../theme/c';
-import { config } from '../theme/config';
+import { c } from '../../../const/theme/c';
+import { config } from '../../../const/theme/config';
 
 export function formatShellOutputLine({ text, type }: IShellOutputData) {
   let shell;

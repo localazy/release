@@ -5,8 +5,8 @@ import { formatBoxFooterLine } from '../log/box/format-box-footer-line';
 import { formatBoxHeaderLine } from '../log/box/format-box-header-line';
 import { formatBoxLine } from '../log/box/format-box-line';
 import { logger } from '../log/logger';
-import { c } from '../log/theme/c';
-import { config } from '../log/theme/config';
+import { c } from '../../const/theme/c';
+import { config } from '../../const/theme/config';
 
 export async function updateChangelog({
   newSection,

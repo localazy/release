@@ -1,5 +1,5 @@
-import { c } from '../theme/c';
-import { config } from '../theme/config';
+import { c } from '../../../const/theme/c';
+import { config } from '../../../const/theme/config';
 import { IFormatShellStatusOptions } from '../../../model/log/box/i-format-shell-status-options';
 
 export function formatShellStatus({ exitCode, out, boxWidth }: IFormatShellStatusOptions) {

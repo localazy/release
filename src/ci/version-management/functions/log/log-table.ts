@@ -4,7 +4,7 @@ import { formatBoxFooterLine } from './box/format-box-footer-line';
 import { formatBoxHeader } from './box/format-box-header';
 import { getTableWidth } from './table/get-table-width';
 import { formatTableRows } from './table/format-table-rows';
-import { c } from './theme/c';
+import { c } from '../../const/theme/c';
 
 export function logTable({ text, rows }: ILogTableOptions) {
   const formattedRows = formatTableRows({ rows });

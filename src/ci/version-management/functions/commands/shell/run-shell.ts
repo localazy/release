@@ -8,8 +8,8 @@ import { logShell } from '../../log/log-shell';
 import { IRunShellOptions } from '../../../model/commands/shell/i-run-shell-options';
 import { IRunShellResult } from '../../../model/commands/shell/i-run-shell-result';
 import { logger } from '../../log/logger';
-import { c } from '../../log/theme/c';
-import { config } from '../../log/theme/config';
+import { c } from '../../../const/theme/c';
+import { config } from '../../../const/theme/config';
 
 export function runShell({ cmd, args, text }: IRunShellOptions): Promise<IRunShellResult> {
   return new Promise((resolve, reject) => {

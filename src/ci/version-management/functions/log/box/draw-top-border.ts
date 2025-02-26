@@ -1,6 +1,6 @@
-import { c } from '../theme/c';
+import { c } from '../../../const/theme/c';
 import { IDrawTopBorderOptions } from '../../../model/log/box/i-draw-top-border-options';
-import { config } from '../theme/config';
+import { config } from '../../../const/theme/config';
 
 export function drawTopBorder({ boxWidth }: IDrawTopBorderOptions) {
   const segments = [

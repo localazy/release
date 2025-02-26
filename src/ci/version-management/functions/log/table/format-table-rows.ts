@@ -1,6 +1,6 @@
 import { IFormatTableRowsOptions } from '../../../model/log/box/i-format-table-rows-options';
-import { c } from '../theme/c';
-import { config } from '../theme/config';
+import { c } from '../../../const/theme/c';
+import { config } from '../../../const/theme/config';
 import { formatTableRow } from './format-table-row';
 import { getRowLabelMaxWidth } from './get-row-label-max-width';
 

@@ -6,8 +6,8 @@ import { formatBoxHeaderLine } from './box/format-box-header-line';
 import { formatBoxLine } from './box/format-box-line';
 import { getCommitLines } from './categorized-commits/get-commit-lines';
 import { logger } from './logger';
-import { c } from './theme/c';
-import { config } from './theme/config';
+import { c } from '../../const/theme/c';
+import { config } from '../../const/theme/config';
 
 export function logCategorizedCommits({ categorizedCommits }: ILogCategorizedCommitsOptions) {
   const boxWidth = config.categorizedCommits.minWidth;

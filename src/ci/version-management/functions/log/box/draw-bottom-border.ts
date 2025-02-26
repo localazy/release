@@ -1,6 +1,6 @@
-import { c } from '../theme/c';
+import { c } from '../../../const/theme/c';
 import { IDrawBottomBorderOptions } from '../../../model/log/box/i-draw-bottom-border-options';
-import { config } from '../theme/config';
+import { config } from '../../../const/theme/config';
 
 export function drawBottomBorder({ boxWidth }: IDrawBottomBorderOptions) {
   const segments = [

@@ -1,6 +1,6 @@
 import { ILogTableOptions } from '../../../model/log/table/i-log-table-options';
 import { getRowMaxWidth } from './get-row-max-width';
-import { config } from '../theme/config';
+import { config } from '../../../const/theme/config';
 
 export function getTableWidth({ text, rows }: ILogTableOptions) {
   const rowMaxWidth = getRowMaxWidth(rows);

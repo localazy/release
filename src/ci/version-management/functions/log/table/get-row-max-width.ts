@@ -1,5 +1,5 @@
 import { ILogTableRow } from '../../../model/log/box/i-log-table-row';
-import { config } from '../theme/config';
+import { config } from '../../../const/theme/config';
 
 export function getRowMaxWidth(rows: ILogTableRow[]) {
   const { maxLabelLength, maxValueLength } = rows.reduce(

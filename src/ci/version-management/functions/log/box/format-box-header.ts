@@ -1,4 +1,4 @@
-import { config } from '../theme/config';
+import { config } from '../../../const/theme/config';
 import { drawBottomBorder } from './draw-bottom-border';
 import { drawLeftBorder } from './draw-left-border';
 import { drawRightBorder } from './draw-right-border';
