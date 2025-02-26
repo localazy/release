@@ -6,7 +6,7 @@ import { versionStabilityChangeLabel } from '@/functions/utils/version/version-s
 import { decideVersionChangeAction } from '@/functions/utils/workflow-action/decide-version-change-action';
 import { getVersionChangeActionLabel } from '@/functions/utils/workflow-action/get-version-change-action-label';
 import { IDetermineVersionIncreaseTaskOutput } from '@/model/tasks/i-determine-version-increase-task-output';
-import { isTaskPresent } from '@/functions/tasks/is-task-present';
+import { isTaskPresent } from '@/functions/utils/type-guard/is-task-present';
 import { MainContextType } from '@/model/tasks/main-context-type';
 
 export async function determineVersionIncreaseTask(ctx: MainContextType): Promise<IDetermineVersionIncreaseTaskOutput> {

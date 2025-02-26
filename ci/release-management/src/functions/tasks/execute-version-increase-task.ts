@@ -8,7 +8,7 @@ import { startPrereleaseCommand } from '@/functions/commands/start-prerelease-co
 import { logger } from '@/functions/log/logger';
 import { readPackageJson } from '@/functions/utils/package-json/read-package-json';
 import { IExecuteVersionIncreaseTaskOutput } from '@/model/tasks/i-execute-version-increase-task-output';
-import { isTaskPresent } from '@/functions/tasks/is-task-present';
+import { isTaskPresent } from '@/functions/utils/type-guard/is-task-present';
 import { MainContextType } from '@/model/tasks/main-context-type';
 
 export async function executeVersionIncreaseTask(ctx: MainContextType): Promise<IExecuteVersionIncreaseTaskOutput> {

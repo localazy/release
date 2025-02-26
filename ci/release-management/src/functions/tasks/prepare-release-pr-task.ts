@@ -6,7 +6,7 @@ import { determineVersionIncreaseTask } from '@/functions/tasks/determine-versio
 import { executeCommitChangesTask } from '@/functions/tasks/execute-commit-changes-task';
 import { executeVersionIncreaseTask } from '@/functions/tasks/execute-version-increase-task';
 import { generateChangelogTask } from '@/functions/tasks/generate-changelog-task';
-import { isTaskPresent } from '@/functions/tasks/is-task-present';
+import { isTaskPresent } from '@/functions/utils/type-guard/is-task-present';
 
 export async function prepareReleasePrTask(ctx: MainContextType) {
   try {

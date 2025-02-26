@@ -1,7 +1,7 @@
 import { IGitTag } from '@/model/git/i-git-tag';
 import { IGitGetLatestTagOptions } from '@/model/git/i-git-get-latest-tag-options';
 import { logger } from '@/functions/log/logger';
-import { sortGitTags } from '@/functions/git/sort/sort-git-tags';
+import { sortGitTags } from '@/functions/utils/sort/sort-git-tags';
 
 export function gitGetLatestTag({ commits }: IGitGetLatestTagOptions): IGitTag | null {
   try {

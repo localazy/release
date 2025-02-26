@@ -1,7 +1,7 @@
 import { GitCommitType } from '@/model/git/git-commit-type';
 import { getPrimaryType } from '@/functions/git/commit/get-primary-type';
-import { isAlias } from '@/functions/git/commit/is-alias';
-import { isPrimaryType } from '@/functions/git/commit/is-primary-type';
+import { isAlias } from '@/functions/utils/type-guard/is-alias';
+import { isPrimaryType } from '@/functions/utils/type-guard/is-primary-type';
 import { IParseSemverOptions } from '@/model/git/semver/i-parse-semver-options';
 
 export function parseSemver({ parsedMessage }: IParseSemverOptions): GitCommitType['semver'] {

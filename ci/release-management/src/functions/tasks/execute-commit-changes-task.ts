@@ -1,6 +1,6 @@
 import { addAndCommitChangesCommand } from '@/functions/commands/add-and-commit-changes-command';
 import { logger } from '@/functions/log/logger';
-import { isTaskPresent } from '@/functions/tasks/is-task-present';
+import { isTaskPresent } from '@/functions/utils/type-guard/is-task-present';
 import { MainContextType } from '@/model/tasks/main-context-type';
 
 export async function executeCommitChangesTask(ctx: MainContextType) {
