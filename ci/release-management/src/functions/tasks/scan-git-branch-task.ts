@@ -1,3 +1,4 @@
+import { getBranchName } from '@/functions/github/get-branch-name';
 import { logCategorizedCommits } from '@/functions/log/log-categorized-commits';
 import { logList } from '@/functions/log/log-list';
 import { endGroup, logger, startGroup } from '@/functions/log/logger';
@@ -8,6 +9,7 @@ import { gitGetLatestTag } from '@/functions/git/git-get-latest-tag';
 import { categorizeCommits } from '@/functions/git/commit/categorize-commits';
 import { readPackageJson } from '@/functions/utils/package-json/read-package-json';
 import { IScanBranchStateTaskOutput } from '@/model/tasks/i-scan-branch-state-task-output';
+import { context } from '@actions/github';
 
 export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBranchStateTaskOutput> {
   try {
@@ -15,19 +17,22 @@ export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBran
 
     logger('Starting the "Scan Git Branch" task');
 
-    // logList({
-    //   rows: [
-    //     { icon: '🎭', label: 'Simulated Run', value: ctx.env.isSimulatedWorkflowRun },
-    //     { icon: '👤', label: 'Owner', value: ctx.repository.owner },
-    //     { icon: '📂', label: 'Repo', value: ctx.repository.repo },
-    //   ],
-    // });
-    // endGroup();
-
     // Get commits and latest tag from git
+    const owner = context.repo.owner;
+    const repo = context.repo.repo;
+    const branch = getBranchName();
     const commits = await gitGetCommits();
     const latestTag = gitGetLatestTag({ commits });
     const newCommits = gitGetCommitsSinceLatestTag({ commits, latestTag });
+
+    logList({
+      rows: [
+        // { icon: '🎭', label: 'Simulated Run', value: ctx.env.isSimulatedWorkflowRun },
+        { icon: '👤', label: 'Owner', value: owner },
+        { icon: '📂', label: 'Repo', value: repo },
+      ],
+    });
+    endGroup();
 
     // Read package.json
     const packageJson = await readPackageJson();
@@ -35,7 +40,7 @@ export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBran
 
     logList({
       rows: [
-        // { icon: '🌿', label: 'Branch', value: ctx.repository.branch },
+        { icon: '🌿', label: 'Branch', value: branch },
         { icon: '🔖', label: 'Latest Git Tag', value: latestTag?.name ?? 'No Tag' },
         {
           icon: '📦',

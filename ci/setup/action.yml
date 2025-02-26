@@ -10,15 +10,15 @@ inputs:
     description: GitHub app private key.
     required: true
 
-  run-after-setup:
-    description: Bash code to run after setup.
-    required: false
-    default: ''
-
   node-version:
     description: |
       By default, the version of Node.js is read from the .nvmrc file.
       This input allows you to override it.
+    required: false
+    default: ''
+
+  run-after-setup:
+    description: Bash code to run after setup.
     required: false
     default: ''
 
@@ -40,9 +40,6 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         node-version-file: .nvmrc
-
-    - run: node -v
-      shell: bash
 
     - if: "!env.ACT"
       name: Setup GitHub App Token
