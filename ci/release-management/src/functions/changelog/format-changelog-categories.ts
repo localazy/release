@@ -13,9 +13,9 @@ export function formatChangelogCategories({ changelogCategories }: IFormatChange
       const heading = commits[0].changelog === 'none' ? '' : commits[0].changelog.heading;
       const formattedCommits = formatChangelogCommits({ commits }).join('\n');
 
-      acc.push(`### ${heading}\n\n${formattedCommits}\n`);
+      acc.push(`### ${heading}\n\n${formattedCommits}`);
 
       return acc;
     }, [])
-    .join('\n');
+    .join('\n\n');
 }
