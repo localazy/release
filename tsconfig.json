@@ -7,12 +7,7 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "strict": true,
-    "types": [
-      "@types/node",
-      "@types/fs-extra",
-    ]
+    "types": ["@types/node", "@types/fs-extra"]
   },
-  "include": [
-    "src"
-  ]
+  "include": ["ci/**/src"]
 }
