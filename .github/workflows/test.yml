@@ -20,12 +20,12 @@ jobs:
         id: version-management
         uses: ./ci/version-management
 
-      - if: "steps.version-management.outputs.next-action == 'create-pull-request'"
-        name: 💙 Localazy CD - Create Pull Request
-        run: |
-          echo "Create Pull Request"
-          echo "Package Version: ${{ steps.version-management.outputs.package-version }}"
-          echo "Changelog PR: ${{ steps.version-management.outputs.changelog-pr }}"
+#      - if: "steps.version-management.outputs.next-action == 'create-pull-request'"
+#        name: 💙 Localazy CD - Create Pull Request
+#        run: |
+#          echo "Create Pull Request"
+#          echo "Package Version: ${{ steps.version-management.outputs.package-version }}"
+#          echo "Changelog PR: ${{ steps.version-management.outputs.changelog-pr }}"
 
       #      - if: "steps.version-management.outputs.next-action == 'create-github-release' && !env.ACT"
       #        name: 💙 Localazy CD - Create Github Release
