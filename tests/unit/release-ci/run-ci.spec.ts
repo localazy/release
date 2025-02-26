@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { versionManagementAction } from '../../../src/ci/version-management/version-management-action';
+import { versionManagementAction } from '../../../ci/version-management/src/version-management-action';
 
 describe('getCommitsSinceTag', () => {
   const mockOctokit = {
