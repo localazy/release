@@ -8,14 +8,14 @@ import { gitGetCommitsSinceLatestTag } from '@/functions/git/git-get-commits-sin
 import { gitGetLatestTag } from '@/functions/git/git-get-latest-tag';
 import { categorizeCommits } from '@/functions/git/commit/categorize-commits';
 import { readPackageJson } from '@/functions/utils/package-json/read-package-json';
-import { IScanBranchStateTaskOutput } from '@/model/tasks/i-scan-branch-state-task-output';
+import { IScanGitRepositoryTaskOutput } from '@/model/tasks/i-scan-git-repository-task-output';
 import { context } from '@actions/github';
 
-export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBranchStateTaskOutput> {
+export async function scanGitRepositoryTask(ctx: MainContextType): Promise<IScanGitRepositoryTaskOutput> {
   try {
-    startGroup('🌿 Git Branch Status');
+    startGroup('🗃️ Git Repository Status');
 
-    logger('Starting the "Scan Git Branch" task');
+    logger('Starting the "Scan Git Repository" task');
 
     // Get environment variables
     const isSimulatedWorkflowRun = !!process.env.ACT;
@@ -61,7 +61,7 @@ export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBran
     logCategorizedCommits({ categorizedCommits });
     endGroup();
 
-    const output: IScanBranchStateTaskOutput = {
+    const output: IScanGitRepositoryTaskOutput = {
       commits,
       latestTag,
       newCommits,

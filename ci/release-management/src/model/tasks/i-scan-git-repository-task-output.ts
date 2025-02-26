@@ -4,7 +4,7 @@ import { IGitTag } from '@/model/git/i-git-tag';
 
 import { CategorizedCommitsOutputType } from '@/model/git/commit/categorized-commits-output-type';
 
-export interface IScanBranchStateTaskOutput {
+export interface IScanGitRepositoryTaskOutput {
   commits: GitCommitType[];
   latestTag: IGitTag | null;
   newCommits: GitCommitType[];

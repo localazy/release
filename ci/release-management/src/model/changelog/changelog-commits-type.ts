@@ -1,4 +1,4 @@
-import { IScanBranchStateTaskOutput } from '@/model/tasks/i-scan-branch-state-task-output';
+import { IScanGitRepositoryTaskOutput } from '@/model/tasks/i-scan-git-repository-task-output';
 import { ChangelogCategoryType } from '@/model/changelog/changelog-category-type';
 
-export type ChangelogCommitsType = Partial<Record<ChangelogCategoryType, IScanBranchStateTaskOutput['newCommits']>>;
+export type ChangelogCommitsType = Partial<Record<ChangelogCategoryType, IScanGitRepositoryTaskOutput['newCommits']>>;

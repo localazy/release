@@ -1,5 +1,5 @@
-import { IScanBranchStateTaskOutput } from '@/model/tasks/i-scan-branch-state-task-output';
+import { IScanGitRepositoryTaskOutput } from '@/model/tasks/i-scan-git-repository-task-output';
 
 export interface IFormatChangelogCommitsOptions {
-  commits: IScanBranchStateTaskOutput['newCommits'];
+  commits: IScanGitRepositoryTaskOutput['newCommits'];
 }

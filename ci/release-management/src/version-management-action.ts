@@ -2,7 +2,7 @@ import { MainContextType } from '@/model/tasks/main-context-type';
 import { prepareReleasePrTask } from '@/functions/tasks/prepare-release-pr-task';
 import { productionReleaseTask } from '@/functions/tasks/production-release-task';
 import { chooseWorkflowTask } from '@/functions/tasks/choose-workflow-task';
-import { scanGitBranchTask } from '@/functions/tasks/scan-git-branch-task';
+import { scanGitRepositoryTask } from '@/functions/tasks/scan-git-repository-task';
 
 export async function versionManagementAction() {
   try {
@@ -11,7 +11,7 @@ export async function versionManagementAction() {
     // showAvailableEnvVariables();
     // const env = processEnvVariables();
 
-    await scanGitBranchTask(ctx);
+    await scanGitRepositoryTask(ctx);
     chooseWorkflowTask(ctx);
 
     switch (ctx['choose-workflow']?.output.nextTask) {
