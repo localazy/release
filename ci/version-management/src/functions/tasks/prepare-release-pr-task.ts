@@ -6,6 +6,7 @@ import { executeVersionIncreaseTask } from './execute-version-increase-task';
 import { generateChangelogTask } from './generate-changelog-task';
 import { MainContextType } from '../../model/tasks/main-context-type';
 import { isTaskPresent } from './is-task-present';
+import { context } from '@actions/github';
 
 export async function prepareReleasePrTask(ctx: MainContextType) {
   try {
@@ -15,6 +16,8 @@ export async function prepareReleasePrTask(ctx: MainContextType) {
     await executeVersionIncreaseTask(ctx);
     await generateChangelogTask(ctx);
     await executeCommitChangesTask(ctx);
+
+    console.log('context.eventName', context.eventName);
 
     if (isTaskPresent(ctx, 'execute-version-increase')) {
       setOutput('package-version', ctx['execute-version-increase'].output.packageJson.version);
