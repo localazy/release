@@ -47,7 +47,7 @@ export function gitParseCommits({ commitsJson }: IGitParseCommitsOptions): GitCo
     });
 
     // TODO switch to debug
-    logger(`All skipped tags: ${JSON.stringify(Array.from(allSkippedTags), null, 2)}`, 'info');
+    logger(`Tags skipped during parsing: ${JSON.stringify(Array.from(allSkippedTags), null, 2)}`, 'info');
 
     return commits;
   } catch (err: unknown) {
