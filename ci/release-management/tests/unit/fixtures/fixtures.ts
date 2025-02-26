@@ -1,5 +1,5 @@
-import { createGithubCommit } from '../../../src/functions/github/create-github-commit';
-import { createGithubTag } from '../../../src/functions/github/create-github-tag';
+import { createGithubCommit } from '@/functions/github/create-github-commit';
+import { createGithubTag } from '@/functions/github/create-github-tag';
 
 export const fixtures = {
   patch: {

@@ -16,6 +16,16 @@ export async function prepareReleasePrTask(ctx: MainContextType) {
     await generateChangelogTask(ctx);
     await executeCommitChangesTask(ctx);
 
+    endGroup();
+
+    // logList({
+    //   rows: [
+    //     { icon: '🟢', label: 'Version Stability', value: ctx.versioning.stabilityLevel },
+    //     { icon: '⬆️', label: 'Version Increase', value: ctx.versioning.versionIncrease },
+    //     { icon: '♻️', label: 'Stability Change', value: ctx.versioning.stabilityChangeLabel },
+    //   ],
+    // });
+
     if (isTaskPresent(ctx, 'execute-version-increase')) {
       setOutput('package-version', ctx['execute-version-increase'].output.packageJson.version);
     }
@@ -28,7 +38,5 @@ export async function prepareReleasePrTask(ctx: MainContextType) {
     setOutput('next-action', 'create-pull-request');
   } catch (err: unknown) {
     throw new Error('Failed to prepare release PR', { cause: err });
-  } finally {
-    endGroup();
   }
 }

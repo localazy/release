@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { versionManagementAction } from '../../../src/version-management-action';
+import { versionManagementAction } from '@/version-management-action';
 
 describe('getCommitsSinceTag', () => {
   const mockOctokit = {
@@ -20,6 +20,8 @@ describe('getCommitsSinceTag', () => {
   ];
 
   beforeEach(() => {
+    // process.env.GITHUB_REPOSITORY = 'test-owner/test-repo';
+    // process.env.GITHUB_REF = 'refs/heads/main';
     vi.clearAllMocks();
     // vi.mocked(createOctokitInstance).mockReturnValue(mockOctokit);
 

@@ -2,6 +2,7 @@ import { getBranchName } from '@/functions/github/get-branch-name';
 import { logCategorizedCommits } from '@/functions/log/log-categorized-commits';
 import { logList } from '@/functions/log/log-list';
 import { endGroup, logger, startGroup } from '@/functions/log/logger';
+import { determineStabilityLevel } from '@/functions/utils/package-json/determine-stability-level';
 import { MainContextType } from '@/model/tasks/main-context-type';
 import { gitGetCommits } from '@/functions/git/git-get-commits';
 import { gitGetCommitsSinceLatestTag } from '@/functions/git/git-get-commits-since-latest-tag';
@@ -42,6 +43,7 @@ export async function scanGitRepositoryTask(ctx: MainContextType): Promise<IScan
 
     // Read package.json
     const packageJson = await readPackageJson();
+    const stabilityLevel = determineStabilityLevel({ packageJson });
     endGroup();
 
     logList({
@@ -73,6 +75,7 @@ export async function scanGitRepositoryTask(ctx: MainContextType): Promise<IScan
       newCommits,
       categorizedCommits,
       packageJson,
+      stabilityLevel,
     };
 
     // Save the results to the context

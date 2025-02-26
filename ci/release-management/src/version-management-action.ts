@@ -1,3 +1,4 @@
+import { showAvailableEnvVariables } from '@/functions/utils/env/show-available-env-variables';
 import { MainContextType } from '@/model/tasks/main-context-type';
 import { prepareReleasePrTask } from '@/functions/tasks/prepare-release-pr-task';
 import { productionReleaseTask } from '@/functions/tasks/production-release-task';
@@ -7,7 +8,7 @@ import { scanGitRepositoryTask } from '@/functions/tasks/scan-git-repository-tas
 export async function versionManagementAction() {
   try {
     const ctx: MainContextType = {};
-    // showAvailableEnvVariables();
+    showAvailableEnvVariables();
     // const env = processEnvVariables();
 
     await scanGitRepositoryTask(ctx);

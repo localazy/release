@@ -1,6 +1,5 @@
 import { logger } from '@/functions/log/logger';
 import { containsPrereleaseCommit } from '@/functions/git/commit/contains-prerelease-commit';
-import { determineStabilityLevel } from '@/functions/utils/package-json/determine-stability-level';
 import { determineVersionIncrease } from '@/functions/utils/version/determine-version-increase';
 import { versionStabilityChangeLabel } from '@/functions/utils/version/version-stability-change-label';
 import { decideVersionChangeAction } from '@/functions/utils/workflow-action/decide-version-change-action';
@@ -17,18 +16,10 @@ export async function determineVersionIncreaseTask(ctx: MainContextType): Promis
       throw new Error('Missing scan-branch-state task output');
     }
 
-    // logList({
-    //   rows: [
-    //     { icon: '🟢', label: 'Version Stability', value: ctx.versioning.stabilityLevel },
-    //     { icon: '⬆️', label: 'Version Increase', value: ctx.versioning.versionIncrease },
-    //     { icon: '♻️', label: 'Stability Change', value: ctx.versioning.stabilityChangeLabel },
-    //   ],
-    // });
+    const { stabilityLevel, newCommits } = ctx['scan-branch-state'].output;
 
-    const { packageJson, newCommits } = ctx['scan-branch-state'].output;
+    // Determine version increase
 
-    // Determine stability and version increase
-    const stabilityLevel = determineStabilityLevel({ packageJson });
     const versionIncrease = determineVersionIncrease({ newCommits });
     const switchingVersionStability = containsPrereleaseCommit({ newCommits });
 
@@ -49,7 +40,6 @@ export async function determineVersionIncreaseTask(ctx: MainContextType): Promis
     const output: IDetermineVersionIncreaseTaskOutput = {
       versionIncrease,
       versionChangeAction,
-      stabilityLevel,
       switchingVersionStability,
       versionChangeActionLabel,
       stabilityChangeLabel,
