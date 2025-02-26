@@ -7,5 +7,5 @@
     }
   },
   "include": ["src"],
-  "types": ["@types/node", "@types/fs-extra"]
+  "types": ["@types/fs-extra"]
 }

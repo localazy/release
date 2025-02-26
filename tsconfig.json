@@ -7,5 +7,6 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "strict": true
-  }
+  },
+  "types": ["@types/node"]
 }
