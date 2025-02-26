@@ -8,6 +8,5 @@
     "noEmit": true,
     "strict": true,
     "types": ["@types/node", "@types/fs-extra"]
-  },
-  "include": ["ci/**/src"]
+  }
 }
