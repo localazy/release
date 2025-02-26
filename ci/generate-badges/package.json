@@ -1,0 +1,23 @@
+{
+  "name": "@release/generate-badges",
+  "version": "2.18.0",
+  "description": "Localazy GitHub release action",
+  "author": "Localazy <team@localazy.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "ncc build --minify --no-cache --target es2022 --v8-cache --out dist src/main.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "badgen": "^3.2.3",
+    "filesize": "^10.1.6",
+    "fs-extra": "^11.3.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.5",
+    "@vercel/ncc": "^0.38.3",
+    "typescript": "5.7.3"
+  }
+}

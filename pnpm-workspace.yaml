@@ -1,0 +1,4 @@
+packages:
+  - ci/generate-badges
+  - ci/cypress-process-clean-up
+  - ci/release-management

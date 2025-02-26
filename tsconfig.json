@@ -6,7 +6,6 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
-    "strict": true,
-    "types": ["@types/node", "@types/fs-extra"]
+    "strict": true
   }
 }

@@ -1,0 +1,20 @@
+{
+  "name": "@release/cypress-process-clean-up",
+  "version": "2.18.0",
+  "description": "Localazy GitHub release action",
+  "author": "Localazy <team@localazy.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "ncc build --minify --no-cache --target es2022 --v8-cache --out dist src/main.ts"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "ps-list": "^8.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "@vercel/ncc": "^0.38.3",
+    "typescript": "5.7.3"
+  }
+}

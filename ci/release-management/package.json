@@ -1,0 +1,33 @@
+{
+  "name": "@release/release-management",
+  "version": "2.18.0",
+  "description": "Localazy GitHub release action",
+  "author": "Localazy <team@localazy.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "ncc build --minify --no-cache --target es2022 --v8-cache --out dist src/main.ts",
+    "test": "npm run test:unit",
+    "test:unit": "vitest",
+    "test:unit:ci": "vitest run --ci",
+    "test:unit:browser": "vitest --browser",
+    "test:unit:debug": "vitest --inspect --no-file-parallelism --browser",
+    "test:unit:coverage": "vitest run --coverage",
+    "test:unit:ui": "vitest --ui"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0",
+    "@octokit/rest": "^21.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "@vercel/ncc": "^0.38.3",
+    "@vitest/browser": "^3.0.7",
+    "@vitest/coverage-v8": "^3.0.7",
+    "@vitest/ui": "^3.0.7",
+    "chalk": "^5.4.1",
+    "typescript": "5.7.3",
+    "vitest": "^3.0.7"
+  }
+}
