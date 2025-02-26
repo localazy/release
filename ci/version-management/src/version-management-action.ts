@@ -15,12 +15,12 @@ export async function versionManagementAction() {
     chooseWorkflowTask(ctx);
 
     switch (ctx['choose-workflow']?.output.nextTask) {
-      case 'release-production':
-        await productionReleaseTask(ctx);
-        break;
-
       case 'prepare-release-pr':
         await prepareReleasePrTask(ctx);
+        break;
+
+      case 'release-production':
+        await productionReleaseTask(ctx);
         break;
 
       default:
