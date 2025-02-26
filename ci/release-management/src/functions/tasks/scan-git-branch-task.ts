@@ -17,9 +17,14 @@ export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBran
 
     logger('Starting the "Scan Git Branch" task');
 
-    // Get commits and latest tag from git
+    // Get environment variables
+    const isSimulatedWorkflowRun = !!process.env.ACT;
+
+    // Get owner and repo from GitHub context
     const owner = context.repo.owner;
     const repo = context.repo.repo;
+
+    // Get commits and latest tag from git
     const branch = getBranchName();
     const commits = await gitGetCommits();
     const latestTag = gitGetLatestTag({ commits });
@@ -27,12 +32,11 @@ export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBran
 
     logList({
       rows: [
-        // { icon: '🎭', label: 'Simulated Run', value: ctx.env.isSimulatedWorkflowRun },
+        { icon: '🎭', label: 'Simulated Run', value: isSimulatedWorkflowRun },
         { icon: '👤', label: 'Owner', value: owner },
         { icon: '📂', label: 'Repo', value: repo },
       ],
     });
-    endGroup();
 
     // Read package.json
     const packageJson = await readPackageJson();

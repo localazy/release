@@ -7,7 +7,7 @@ import { scanGitBranchTask } from '@/functions/tasks/scan-git-branch-task';
 export async function versionManagementAction() {
   try {
     const ctx: MainContextType = {};
-    // startGroup('⚙️ Workflow Run Details');
+    // ⚙️ Workflow Run Details
     // showAvailableEnvVariables();
     // const env = processEnvVariables();
 
