@@ -1,3 +1,23 @@
+## 2.18.0 (2025-02-26)
+
+### ✨ Features
+
+- WIP ([ed1baed](https://github.com/localazy/release/commit/ed1baedd245ddcb487ec70839f3e3b555a3b976a)
+### 🧰 Other Commits
+
+- changes 5 ([31a93f8](https://github.com/localazy/release/commit/31a93f87ef90c3f36ec9b3f1576d8fe6e7ba9319)
+- changes 7 ([f8ec9d3](https://github.com/localazy/release/commit/f8ec9d3bd82a82a57dad37d12eb9d7998ec48df2)
+- changes 5 ([a3e8e82](https://github.com/localazy/release/commit/a3e8e82adc04110fa71d843c957df3cbb4bfede4)
+- changes 7 ([41c3d85](https://github.com/localazy/release/commit/41c3d855003c7f48cbbfe555e946c9b9875c24fd)
+- changes 5 ([7c29f49](https://github.com/localazy/release/commit/7c29f498deee2e678bda4246fb086155174eeb6e)
+- changes 6 ([c7d07cf](https://github.com/localazy/release/commit/c7d07cf359938b6f240902f62976488ad0d2cf20)
+- changes 3 ([8f8a338](https://github.com/localazy/release/commit/8f8a338e17b8a8260eae8cca0d68f57c6902bd42)
+- changes 10 ([95cf288](https://github.com/localazy/release/commit/95cf2881b759172419dc34899967e0877d4a22e9)
+- changes 1 ([19ae976](https://github.com/localazy/release/commit/19ae976c507899b9927c7279a6bd9967f23be6ae)
+- changes 10 ([017cba3](https://github.com/localazy/release/commit/017cba35272920a88cfb5c3a8504aee485dd64f7)
+- changes 3 ([793ea14](https://github.com/localazy/release/commit/793ea14f45cda0916d606d79e8858bd1011021a5)
+- Remove Node 16 hacks ([3d529a7](https://github.com/localazy/release/commit/3d529a7a73ea726bf14265755f0f8087eb0d138b)
+
 ## 2.18.0 (2025-02-25)
 
 ### ✨ Features
