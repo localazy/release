@@ -1,4 +1,4 @@
-name: 💙 Localazy CI Setup
+name: 💙 Localazy CI - Setup
 description: Checkout repository, setup Node, setup GitHub App Token, setup Git User and run after setup.
 
 inputs:

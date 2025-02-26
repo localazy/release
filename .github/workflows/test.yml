@@ -19,9 +19,9 @@ jobs:
           app-id: ${{ secrets.AUTH_APP_ID }}
           app-key: ${{ secrets.AUTH_APP_KEY }}
 
-      - name: 💙 Localazy CI - Version Management
+      - name: 💙 Localazy CI - Release Management
         id: version-management
-        uses: ./ci/version-management
+        uses: ./ci/release-management
 
       - if: "steps.version-management.outputs.next-action == 'create-pull-request'"
         name: 💙 Localazy CD - Create Pull Request

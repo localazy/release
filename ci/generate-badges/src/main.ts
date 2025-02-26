@@ -1,3 +1,3 @@
-import { generateBadges } from './badges';
+import { generateBadges } from '@/badges';
 
 generateBadges();
