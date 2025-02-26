@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "Create Pull Request"
           echo "Package Version: ${{ steps.version-management.outputs.package-version }}"
-          echo "Changelog PR: ${{ steps.version-management.outputs.changelog-pr }}"
+          echo "Changelog PR: ${{ steps.version-management.outputs.changelog-pull-request }}"
 
       - if: "steps.version-management.outputs.next-action == 'create-github-release'"
         name: 💙 Localazy CD - Create Github Release
@@ -51,4 +51,4 @@ jobs:
       #        with:
       #          token: ${{ steps.setup.outputs.token }}
       #          package-version: ${{ steps.version-management.outputs.package-version }}
-      #          changelog-pr: ${{ steps.version-management.outputs.changelog-pr }}
+      #          changelog-pull-request: ${{ steps.version-management.outputs.changelog-pull-request }}

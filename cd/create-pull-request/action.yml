@@ -10,7 +10,7 @@ inputs:
     description: Package version.
     required: true
 
-  changelog-pr:
+  changelog-pull-request:
     description: Changelog for pull request.
     required: true
 
@@ -27,4 +27,4 @@ runs:
         labels: release-preview
         commit-message: "🚀 release: ${{ inputs.package-version }}"
         title: ${{ inputs.package-version }}
-        body: ${{ inputs.changelog-pr }}
+        body: ${{ inputs.changelog-pull-request }}

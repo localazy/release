@@ -1,4 +1,4 @@
 export interface IUpdateChangelogOptions {
-  newSection: string;
+  changelogMd: string;
   filePath?: string;
 }

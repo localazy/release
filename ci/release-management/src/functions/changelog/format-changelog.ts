@@ -14,7 +14,7 @@ export function formatChangelog({ newCommits, version, template }: IGenerateChan
       case 'pull-request':
         logger('Formatting changelog for pull request');
         break;
-      case 'release':
+      case 'github-release':
         logger('Formatting changelog for release');
         break;
       default:

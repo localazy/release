@@ -13,20 +13,29 @@ export async function generateChangelogTask(ctx: MainContextType): Promise<IGene
       throw new Error('Missing scan-branch-state task output');
     }
 
-    const prChangelog = formatChangelog({
-      newCommits: ctx['scan-branch-state'].output.newCommits,
-      version: ctx['execute-version-increase'].output.packageJson.version,
-      template: 'pull-request',
-    });
-    const changelog = formatChangelog({
+    const changelogMd = formatChangelog({
       newCommits: ctx['scan-branch-state'].output.newCommits,
       version: ctx['execute-version-increase'].output.packageJson.version,
       template: 'changelog-md',
     });
+    const changelogPullRequest = formatChangelog({
+      newCommits: ctx['scan-branch-state'].output.newCommits,
+      version: ctx['execute-version-increase'].output.packageJson.version,
+      template: 'pull-request',
+    });
+    const changelogGithubRelease = formatChangelog({
+      newCommits: ctx['scan-branch-state'].output.newCommits,
+      version: ctx['execute-version-increase'].output.packageJson.version,
+      template: 'github-release',
+    });
 
-    await updateChangelog({ newSection: changelog });
+    await updateChangelog({ changelogMd });
 
-    const output: IGenerateChangelogTaskOutput = { changelog, prChangelog };
+    const output: IGenerateChangelogTaskOutput = {
+      changelogMd,
+      changelogPullRequest,
+      changelogGithubRelease,
+    };
 
     ctx['generate-changelog'] = { output };
 

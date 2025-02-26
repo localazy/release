@@ -9,7 +9,7 @@ import { c } from '@/const/theme/c';
 import { config } from '@/const/theme/config';
 
 export async function updateChangelog({
-  newSection,
+  changelogMd,
   filePath = 'CHANGELOG.md',
 }: IUpdateChangelogOptions): Promise<void> {
   try {
@@ -21,11 +21,11 @@ export async function updateChangelog({
       existingContent = await readFile(filePath, 'utf8');
     }
 
-    const updatedContent = `${newSection}\n${existingContent}`;
+    const updatedContent = `${changelogMd}\n${existingContent}`;
     await writeFile(filePath, updatedContent, 'utf8');
 
     logger(formatBoxHeaderLine({ boxWidth: config.categorizedCommits.minWidth }));
-    const lines = newSection.split('\n');
+    const lines = changelogMd.split('\n');
     lines.forEach((line) => {
       logger(formatBoxLine({ text: line, textColor: c.shellNoOutput }));
     });

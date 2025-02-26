@@ -50,7 +50,7 @@ outputs:
   package-version:
     description: 'Package version.'
 
-  changelog-pr:
+  changelog-pull-request:
     description: 'Changelog for pull request.'
 
   changelog-github-release:
