@@ -15,6 +15,13 @@ inputs:
     required: false
     default: ''
 
+  node-version:
+    description: |
+      By default, the version of Node.js is read from the .nvmrc file.
+      This input allows you to override it.
+    required: false
+    default: ''
+
 outputs:
   token:
     description: 'GitHub app token.'
@@ -31,7 +38,7 @@ runs:
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: ${{ inputs.node-version }}
         node-version-file: .nvmrc
 
     - run: node -v
