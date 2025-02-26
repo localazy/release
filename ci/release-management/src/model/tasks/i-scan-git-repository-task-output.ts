@@ -5,6 +5,10 @@ import { IGitTag } from '@/model/git/i-git-tag';
 import { CategorizedCommitsOutputType } from '@/model/git/commit/categorized-commits-output-type';
 
 export interface IScanGitRepositoryTaskOutput {
+  isSimulatedWorkflowRun: boolean;
+  owner: string;
+  repo: string;
+  branch: string;
   commits: GitCommitType[];
   latestTag: IGitTag | null;
   newCommits: GitCommitType[];

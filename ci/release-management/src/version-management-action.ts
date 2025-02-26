@@ -7,7 +7,6 @@ import { scanGitRepositoryTask } from '@/functions/tasks/scan-git-repository-tas
 export async function versionManagementAction() {
   try {
     const ctx: MainContextType = {};
-    // ⚙️ Workflow Run Details
     // showAvailableEnvVariables();
     // const env = processEnvVariables();
 

@@ -21,22 +21,24 @@ export async function scanGitRepositoryTask(ctx: MainContextType): Promise<IScan
     const isSimulatedWorkflowRun = !!process.env.ACT;
 
     // Get owner and repo from GitHub context
+    const eventName = context.eventName;
     const owner = context.repo.owner;
     const repo = context.repo.repo;
-
-    // Get commits and latest tag from git
     const branch = getBranchName();
-    const commits = await gitGetCommits();
-    const latestTag = gitGetLatestTag({ commits });
-    const newCommits = gitGetCommitsSinceLatestTag({ commits, latestTag });
 
     logList({
       rows: [
+        { icon: '⚙️', label: 'Workflow Trigger', value: `${eventName} to ${branch}` },
         { icon: '🎭', label: 'Simulated Run', value: isSimulatedWorkflowRun },
         { icon: '👤', label: 'Owner', value: owner },
         { icon: '📂', label: 'Repo', value: repo },
       ],
     });
+
+    // Get commits and latest tag from git
+    const commits = await gitGetCommits();
+    const latestTag = gitGetLatestTag({ commits });
+    const newCommits = gitGetCommitsSinceLatestTag({ commits, latestTag });
 
     // Read package.json
     const packageJson = await readPackageJson();
@@ -62,6 +64,10 @@ export async function scanGitRepositoryTask(ctx: MainContextType): Promise<IScan
     endGroup();
 
     const output: IScanGitRepositoryTaskOutput = {
+      isSimulatedWorkflowRun,
+      owner,
+      repo,
+      branch,
       commits,
       latestTag,
       newCommits,
