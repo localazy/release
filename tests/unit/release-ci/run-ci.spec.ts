@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ciVersionManagementAction } from '../../../src/ci-version-management/ci-version-management-action';
+import { versionManagementAction } from '../../../src/ci/version-management/version-management-action';
 
 describe('getCommitsSinceTag', () => {
   const mockOctokit = {
@@ -31,7 +31,7 @@ describe('getCommitsSinceTag', () => {
   });
 
   it('should return parsed commits from GitHub API', async () => {
-    await ciVersionManagementAction();
+    await versionManagementAction();
 
     // expect(mockOctokit.repos.compareCommits).toHaveBeenCalledWith({
     //   owner: 'test-owner',

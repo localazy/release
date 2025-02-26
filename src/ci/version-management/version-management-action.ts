@@ -4,7 +4,7 @@ import { productionReleaseTask } from './functions/tasks/production-release-task
 import { chooseWorkflowTask } from './functions/tasks/choose-workflow-task';
 import { scanGitBranchTask } from './functions/tasks/scan-git-branch-task';
 
-export async function ciVersionManagementAction() {
+export async function versionManagementAction() {
   try {
     const ctx: MainContextType = {};
     // startGroup('⚙️ Workflow Run Details');

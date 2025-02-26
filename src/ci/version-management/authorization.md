@@ -37,7 +37,7 @@ following configuration:
 - Pull requests
   - Read-only
 
-Store the token in the [`.env`](../../.env) file in the root of the repository:
+Store the token in the [`.env`](../../../.env) file in the root of the repository:
 
 ```dotenv
 GITHUB_TOKEN=ghp_...

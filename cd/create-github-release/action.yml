@@ -1,0 +1,27 @@
+name: 💙 Localazy CD Release
+description: ''
+
+inputs:
+  token:
+    description: GitHub app token.
+    required: true
+
+  package-version:
+    description: Package version.
+    required: true
+
+  changelog-github-release:
+    description: Changelog for GitHub release.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create GitHub Release
+      uses: ncipollo/release-action@v1
+      with:
+        token: ${{ inputs.token }}
+        name: ${{ inputs.package-version }}
+        tag: ${{ inputs.package-version }}
+        body: ${{ inputs.changelog-github-release }}
+        skipIfReleaseExists: true

@@ -9,7 +9,7 @@
     "build": "npm run build:cypress-process-clean-up && npm run build:generate-badges && npm run build:release-workflow",
     "build:cypress-process-clean-up": "npm run compile -- --out cypress-process-clean-up/dist/main src/cypress-process-clean-up/main.ts && npm run compile -- --out cypress-process-clean-up/dist/post src/cypress-process-clean-up/post.ts",
     "build:generate-badges": "npm run compile -- --out generate-badges/dist/main src/generate-badges/main.ts",
-    "build:release-workflow": "npm run compile -- --out ci-version-management/dist src/ci-version-management/main.ts",
+    "build:release-workflow": "npm run compile -- --out ci/version-management/dist src/ci/version-management/main.ts",
     "test": "npm run test:unit",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run --ci",

@@ -1,5 +1,5 @@
-import { createOctokitCommit } from '../../../src/ci-version-management/functions/octokit/create-octokit-commit';
-import { createOctokitTag } from '../../../src/ci-version-management/functions/octokit/create-octokit-tag';
+import { createOctokitCommit } from '../../../src/ci/version-management/functions/octokit/create-octokit-commit';
+import { createOctokitTag } from '../../../src/ci/version-management/functions/octokit/create-octokit-tag';
 
 export const fixtures = {
   patch: {

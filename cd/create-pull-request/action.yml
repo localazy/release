@@ -1,0 +1,30 @@
+name: 💙 Localazy CD Release
+description: ''
+
+inputs:
+  token:
+    description: GitHub app token.
+    required: true
+
+  package-version:
+    description: Package version.
+    required: true
+
+  changelog-pr:
+    description: Changelog for pull request.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ inputs.token }}
+        branch: wip_release
+        base: wip_pr_target
+        delete-branch: 'false'
+        labels: release-preview
+        commit-message: "🚀 release: ${{ inputs.package-version }}"
+        title: ${{ inputs.package-version }}
+        body: ${{ inputs.changelog-pr }}
