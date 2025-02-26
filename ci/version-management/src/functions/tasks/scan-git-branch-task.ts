@@ -28,10 +28,10 @@ export async function scanGitBranchTask(ctx: MainContextType): Promise<IScanBran
     const commits = await gitGetCommits();
     const latestTag = gitGetLatestTag({ commits });
     const newCommits = gitGetCommitsSinceLatestTag({ commits, latestTag });
-    endGroup();
 
     // Read package.json
     const packageJson = await readPackageJson();
+    endGroup();
 
     logList({
       rows: [

@@ -9,18 +9,18 @@ export async function generateChangelogTask(ctx: MainContextType): Promise<IGene
   try {
     logger('Starting the "Generate Changelog" task');
 
-    if (!isTaskPresent(ctx, 'scan-branch-state')) {
+    if (!isTaskPresent(ctx, 'scan-branch-state') || !isTaskPresent(ctx, 'execute-version-increase')) {
       throw new Error('Missing scan-branch-state task output');
     }
 
     const prChangelog = formatChangelog({
       newCommits: ctx['scan-branch-state'].output.newCommits,
-      version: ctx['scan-branch-state'].output.packageJson.version,
+      version: ctx['execute-version-increase'].output.packageJson.version,
       template: 'pull-request',
     });
     const changelog = formatChangelog({
       newCommits: ctx['scan-branch-state'].output.newCommits,
-      version: ctx['scan-branch-state'].output.packageJson.version,
+      version: ctx['execute-version-increase'].output.packageJson.version,
       template: 'changelog-md',
     });
 
