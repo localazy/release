@@ -1,51 +1,70 @@
+import { increasePrereleaseCommand } from '@/functions/commands/increase-prerelease-command';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { versionManagementAction } from '@/version-management-action';
 
 describe('getCommitsSinceTag', () => {
-  const mockOctokit = {
-    repos: {
-      compareCommits: vi.fn(),
-    },
-  };
-
-  const mockCommits = [
-    {
-      sha: '123',
-      commit: { message: 'feat: add new feature' },
-    },
-    {
-      sha: '456',
-      commit: { message: 'fix: bug fix' },
-    },
-  ];
-
-  beforeEach(() => {
-    // process.env.GITHUB_REPOSITORY = 'test-owner/test-repo';
-    // process.env.GITHUB_REF = 'refs/heads/main';
-    vi.clearAllMocks();
-    // vi.mocked(createOctokitInstance).mockReturnValue(mockOctokit);
-
-    // mockOctokit.repos.compareCommits.mockResolvedValue({
-    //   data: { commits: mockCommits },
-    // });
-
-    // vi.mocked(parseRawCommitMessage).mockImplementation((commit) => ({ parsed: commit.commit.message }));
-  });
+  beforeEach(() => {});
 
   it('should return parsed commits from GitHub API', async () => {
+    vi.restoreAllMocks();
+
+    vi.mock('@/functions/git/git-get-commits', () => ({
+      gitGetCommits: async () => {
+        return [];
+      },
+    }));
+
+    vi.mock('@/functions/utils/package-json/read-package-json', () => ({
+      readPackageJson: async () => {
+        return {
+          name: '@localazy/test-package',
+          version: '1.2.3',
+        };
+      },
+    }));
+
+    vi.mock('@/functions/commands/patch-increase-command', () => ({
+      patchIncreaseCommand: async () => {
+        return '1.2.4';
+      },
+    }));
+
+    vi.mock('@/functions/commands/minor-increase-command', () => ({
+      minorIncreaseCommand: async () => {
+        return '1.3.0';
+      },
+    }));
+
+    vi.mock('@/functions/commands/major-increase-command', () => ({
+      majorIncreaseCommand: async () => {
+        return '2.0.0';
+      },
+    }));
+
+    vi.mock('@/functions/commands/add-and-commit-changes-command', () => ({
+      addAndCommitChangesCommand: async () => {},
+    }));
+
+    vi.mock('@/functions/commands/increase-prerelease-command', () => ({
+      increasePrereleaseCommand: async () => {
+        return '2.0.0-beta.1';
+      },
+    }));
+
+    vi.mock('@/functions/commands/publish-prerelease-command', () => ({
+      publishPrereleaseCommand: async () => {
+        return '2.0.0';
+      },
+    }));
+
+    vi.mock('@/functions/commands/start-prerelease-command', () => ({
+      startPrereleaseCommand: async () => {
+        return '2.0.0-beta.0';
+      },
+    }));
+
     await versionManagementAction();
 
-    // expect(mockOctokit.repos.compareCommits).toHaveBeenCalledWith({
-    //   owner: 'test-owner',
-    //   repo: 'test-repo',
-    //   base: 'v1.0.0',
-    //   head: 'main',
-    // });
-    //
-    // expect(result).toEqual([
-    //   { ...mockCommits[0], parsedMessage: { parsed: 'feat: add new feature' } },
-    //   { ...mockCommits[1], parsedMessage: { parsed: 'fix: bug fix' } },
-    // ]);
-    expect(true).toBe(true);
+    expect(true).toBe(false);
   });
 });

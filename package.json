@@ -1,11 +1,14 @@
 {
   "name": "@localazy/release",
-  "version": "2.18.0",
+  "version": "2.18.3",
   "description": "Localazy GitHub release action",
   "author": "Localazy <team@localazy.com>",
   "private": true,
   "license": "MIT",
   "type": "module",
+  "dependencies": {
+    "source-map-support": "0.5.21"
+  },
   "devDependencies": {
     "@types/node": "22.13.5",
     "@typescript-eslint/eslint-plugin": "8.25.0",

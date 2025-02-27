@@ -12,10 +12,21 @@ export function chooseWorkflowTask(ctx: MainContextType): IChooseWorkflowTaskOut
     }
 
     const newCommits = ctx['scan-branch-state'].output.newCommits;
+    const latestTag = ctx['scan-branch-state'].output.latestTag;
+
+    if (newCommits.length === 0) {
+      throw new Error('No new commits found');
+    }
+
+    if (latestTag === null) {
+      throw new Error('TODO implement first release');
+    }
+
     const hasReleaseCommit = containsReleaseCommit({ newCommits });
+    const nextTask = hasReleaseCommit ? 'release-production' : 'prepare-release-pr';
 
     const output: IChooseWorkflowTaskOutput = {
-      nextTask: hasReleaseCommit ? 'release-production' : 'prepare-release-pr',
+      nextTask,
     };
 
     ctx['choose-workflow'] = {
