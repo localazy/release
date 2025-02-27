@@ -7,11 +7,11 @@ import { getErrorMessage } from '@/functions/utils/error/get-error-message';
 export function handleException({ err }: IHandleExceptionOptions) {
   console.error(err);
 
-  const chain = collectErrorChain(err);
-  const colorizedChain = chain.map((error) => c.error(error)).join(c.shellNoOutput(' -> '));
+  const errors = collectErrorChain(err);
+  const colorizedErrors = errors.map((error) => c.error(error)).join(c.shellNoOutput(' -> '));
 
-  if (chain.length > 1) {
-    setFailed(`Errors chain:\n${colorizedChain}`);
+  if (errors.length > 1) {
+    setFailed(colorizedErrors);
   } else {
     setFailed(getErrorMessage(err));
   }

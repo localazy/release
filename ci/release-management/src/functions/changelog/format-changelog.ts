@@ -18,7 +18,7 @@ export function formatChangelog({ newCommits, version, template }: IGenerateChan
         logger('Formatting changelog for release');
         break;
       default:
-        throw new Error(`Unsupported template: ${template}`);
+        throw new Error('Unsupported template: ${template}');
     }
 
     const formattedHeader = formatChangelogHeader({ version });

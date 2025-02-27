@@ -27,6 +27,6 @@ export async function releaseManagementAction() {
         throw new Error('Invalid next task');
     }
   } catch (err: unknown) {
-    throw new Error(`Failed to run "Release Management" action.`, { cause: err });
+    throw new Error('Failed to run "Release Management" action', { cause: err });
   }
 }
