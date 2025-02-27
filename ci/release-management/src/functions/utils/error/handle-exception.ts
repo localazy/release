@@ -4,15 +4,12 @@ import { setFailed } from '@actions/core';
 import { IHandleExceptionOptions } from '@/model/utils/error/i-handle-exception-options';
 import { getErrorMessage } from '@/functions/utils/error/get-error-message';
 
-export function handleException({ err }: IHandleExceptionOptions) {
+export function handleException({ err }: IHandleExceptionOptions): void {
   console.error(err);
 
   const errors = collectErrorChain(err);
-  const colorizedErrors = errors.map((error) => c.error(error)).join(c.shellNoOutput(' -> '));
+  const errorMessage =
+    errors.length > 1 ? errors.map(c.error).join(c.shellNoOutput(' -> ')) : c.error(getErrorMessage(err));
 
-  if (errors.length > 1) {
-    setFailed(colorizedErrors);
-  } else {
-    setFailed(getErrorMessage(err));
-  }
+  setFailed(errorMessage);
 }
