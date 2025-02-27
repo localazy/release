@@ -14,6 +14,8 @@ export function chooseWorkflowTask(ctx: MainContextType): IChooseWorkflowTaskOut
     const newCommits = ctx['scan-branch-state'].output.newCommits;
     const latestTag = ctx['scan-branch-state'].output.latestTag;
 
+    throw new Error('No new commits found');
+
     if (newCommits.length === 0) {
       throw new Error('No new commits found');
     }
