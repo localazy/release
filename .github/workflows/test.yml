@@ -20,35 +20,35 @@ jobs:
           app-key: ${{ secrets.AUTH_APP_KEY }}
 
       - name: 💙 Localazy CI - Release Management
-        id: version-management
+        id: release-management
         uses: ./ci/release-management
 
-      - if: "steps.version-management.outputs.next-action == 'create-pull-request'"
+      - if: "steps.release-management.outputs.next-action == 'create-pull-request'"
         name: 💙 Localazy CD - Create Pull Request
         run: |
           echo "Create Pull Request"
-          echo "Package Version: ${{ steps.version-management.outputs.package-version }}"
-          echo "Changelog PR: ${{ steps.version-management.outputs.changelog-pull-request }}"
+          echo "Package Version: ${{ steps.release-management.outputs.package-version }}"
+          echo "Changelog PR: ${{ steps.release-management.outputs.changelog-pull-request }}"
 
-      - if: "steps.version-management.outputs.next-action == 'create-github-release'"
+      - if: "steps.release-management.outputs.next-action == 'create-github-release'"
         name: 💙 Localazy CD - Create Github Release
         run: |
           echo "Create Github Release"
-          echo "Package Version: ${{ steps.version-management.outputs.package-version }}"
-          echo "Changelog Github Release: ${{ steps.version-management.outputs.changelog-github-release }}"
+          echo "Package Version: ${{ steps.release-management.outputs.package-version }}"
+          echo "Changelog Github Release: ${{ steps.release-management.outputs.changelog-github-release }}"
 
-      #      - if: "steps.version-management.outputs.next-action == 'create-github-release' && !env.ACT"
+      #      - if: "steps.release-management.outputs.next-action == 'create-github-release' && !env.ACT"
       #        name: 💙 Localazy CD - Create Github Release
       #        uses: ./cd/create-github-release
       #        with:
       #          token: ${{ steps.setup.outputs.token }}
-      #          package-version: ${{ steps.version-management.outputs.package-version }}
-      #          changelog-github-release: ${{ steps.version-management.outputs.changelog-github-release }}
+      #          package-version: ${{ steps.release-management.outputs.package-version }}
+      #          changelog-github-release: ${{ steps.release-management.outputs.changelog-github-release }}
 
-      #      - if: "steps.version-management.outputs.next-action == 'create-pull-request' && !env.ACT"
+      #      - if: "steps.release-management.outputs.next-action == 'create-pull-request' && !env.ACT"
       #        name: 💙 Localazy CD - Create Pull Request
       #        uses: ./cd/create-pull-request
       #        with:
       #          token: ${{ steps.setup.outputs.token }}
-      #          package-version: ${{ steps.version-management.outputs.package-version }}
-      #          changelog-pull-request: ${{ steps.version-management.outputs.changelog-pull-request }}
+      #          package-version: ${{ steps.release-management.outputs.package-version }}
+      #          changelog-pull-request: ${{ steps.release-management.outputs.changelog-pull-request }}

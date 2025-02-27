@@ -4,5 +4,11 @@ import { getErrorMessage } from '@/functions/utils/error/get-error-message';
 
 export function handleException({ err }: IHandleExceptionOptions) {
   console.error(err);
-  setFailed(getErrorMessage(err));
+
+  const chain = collectErrorChain(err).reverse();
+  if (chain.length > 1) {
+    setFailed(`Error chain: ${chain.join(' -> ')}`);
+  } else {
+    setFailed(getErrorMessage(err));
+  }
 }

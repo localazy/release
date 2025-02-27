@@ -1,6 +1,6 @@
 import { increasePrereleaseCommand } from '@/functions/commands/increase-prerelease-command';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { versionManagementAction } from '@/version-management-action';
+import { releaseManagementAction } from '@/release-management-action';
 
 describe('getCommitsSinceTag', () => {
   beforeEach(() => {});
@@ -63,7 +63,7 @@ describe('getCommitsSinceTag', () => {
       },
     }));
 
-    await versionManagementAction();
+    await releaseManagementAction();
 
     expect(true).toBe(false);
   });

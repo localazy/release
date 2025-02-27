@@ -1,6 +1,6 @@
 import { handleException } from '@/functions/utils/error/handle-exception';
-import { versionManagementAction } from '@/version-management-action';
+import { releaseManagementAction } from '@/release-management-action';
 
-versionManagementAction().catch((err: unknown) => {
+releaseManagementAction().catch((err: unknown) => {
   handleException({ err });
 });

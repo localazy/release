@@ -4,7 +4,7 @@ import { productionReleaseTask } from '@/functions/tasks/production-release-task
 import { chooseWorkflowTask } from '@/functions/tasks/choose-workflow-task';
 import { scanGitRepositoryTask } from '@/functions/tasks/scan-git-repository-task';
 
-export async function versionManagementAction() {
+export async function releaseManagementAction() {
   try {
     const ctx: MainContextType = {};
 
@@ -27,6 +27,6 @@ export async function versionManagementAction() {
         throw new Error('Invalid next task');
     }
   } catch (err: unknown) {
-    throw new Error(`Failed to run release workflow.`, { cause: err });
+    throw new Error(`Failed to run "Release Management" action.`, { cause: err });
   }
 }
