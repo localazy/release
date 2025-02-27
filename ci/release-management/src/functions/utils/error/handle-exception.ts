@@ -8,8 +8,10 @@ export function handleException({ err }: IHandleExceptionOptions) {
   console.error(err);
 
   const chain = collectErrorChain(err);
+  const colorizedChain = chain.map((error) => c.error(error)).join(c.shellNoOutput(' -> '));
+
   if (chain.length > 1) {
-    setFailed(`Errors chain:\n${chain.join(c.shellNoOutput(' -> '))}`);
+    setFailed(`Errors chain:\n${colorizedChain}`);
   } else {
     setFailed(getErrorMessage(err));
   }
