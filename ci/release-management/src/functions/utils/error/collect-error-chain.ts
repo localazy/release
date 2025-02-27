@@ -1,9 +1,9 @@
-export function collectErrorChain(error: unknown): Error[] {
-  const causes: Error[] = [];
+export function collectErrorChain(error: unknown): string[] {
+  const causes: string[] = [];
+  let current = error;
 
-  while (error instanceof Error) {
-    causes.push(error);
-    error = error.cause;
+  for (; current instanceof Error; current = current.cause) {
+    causes.unshift(current.message);
   }
 
   return causes;
