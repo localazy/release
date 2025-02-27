@@ -1,4 +1,4 @@
-function collectErrorChain(error: unknown): Error[] {
+export function collectErrorChain(error: unknown): Error[] {
   const causes: Error[] = [];
 
   while (error instanceof Error) {

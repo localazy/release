@@ -1,3 +1,4 @@
+import { collectErrorChain } from '@/functions/utils/error/collect-error-chain';
 import { setFailed } from '@actions/core';
 import { IHandleExceptionOptions } from '@/model/utils/error/i-handle-exception-options';
 import { getErrorMessage } from '@/functions/utils/error/get-error-message';
