@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "ncc build --minify --no-cache --target es2022 --v8-cache --out dist src/main.ts"
+    "build": "ncc build --minify --no-cache --source-map --target es2022 --v8-cache --out dist src/main.ts"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",

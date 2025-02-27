@@ -6,9 +6,6 @@
   "private": true,
   "license": "MIT",
   "type": "module",
-  "dependencies": {
-    "source-map-support": "0.5.21"
-  },
   "devDependencies": {
     "@types/node": "22.13.5",
     "@typescript-eslint/eslint-plugin": "8.25.0",
