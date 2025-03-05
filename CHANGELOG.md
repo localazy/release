@@ -1,3 +1,9 @@
+# 2.19.0 (2025-03-05)
+
+### ✨ Features
+
+- Add npm-token to NPM setup ([3e32509](https://github.com/localazy/release/commit/3e32509))
+
 ## 2.18.1 (2025-02-10)
 
 ### 🧰 Other Commits
