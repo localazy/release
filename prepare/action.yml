@@ -10,6 +10,11 @@ inputs:
     description: GitHub app private key.
     required: true
 
+  npm-token:
+    description: NPM token.
+    required: false
+    default: ''
+
   run-after-install:
     description: Bash code to run after npm install.
     required: false
@@ -77,6 +82,7 @@ runs:
         run-after-install: ${{ inputs.run-after-install }}
         node-version: ${{ inputs.node-version }}
         node-version-file: ${{ inputs.node-version-file }}
+        npm-token: ${{ inputs.npm-token }}
 
     - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
       shell: bash

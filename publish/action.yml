@@ -98,6 +98,7 @@ runs:
         run-after-install: ${{ inputs.run-after-install }}
         node-version: ${{ inputs.node-version }}
         node-version-file: ${{ inputs.node-version-file }}
+        npm-token: ${{ inputs.npm-token }}
 
     - run: echo -e "\n${{env.blue}}=== Setup GitHub app authorization ===\n"
       shell: bash

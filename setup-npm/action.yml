@@ -17,6 +17,11 @@ inputs:
     required: false
     default: ''
 
+  npm-token:
+    description: NPM token.
+    required: false
+    default: ''
+
 runs:
   using: composite
   steps:
@@ -35,13 +40,25 @@ runs:
 
     - uses: actions/setup-node@v4
       if: inputs.node-version-file == ''
+      env:
+        # Set the "NODE_AUTH_TOKEN" environmental variable that "actions/setup-node" uses as the "_authToken"
+        # in the generated ".npmrc" file to authenticate to NPM registry.
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
       with:
         node-version: ${{ inputs.node-version }}
+        always-auth: true
+        registry-url: https://registry.npmjs.org
 
     - uses: actions/setup-node@v4
       if: inputs.node-version-file != ''
+      env:
+        # Set the "NODE_AUTH_TOKEN" environmental variable that "actions/setup-node" uses as the "_authToken"
+        # in the generated ".npmrc" file to authenticate to NPM registry.
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
       with:
         node-version-file: ${{ inputs.node-version-file }}
+        always-auth: true
+        registry-url: https://registry.npmjs.org
 
     - run: echo -e "\n${{env.blue}}=== Install dependencies ===\n"
       shell: bash
