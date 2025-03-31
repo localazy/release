@@ -1,3 +1,9 @@
+## 2.19.1 (2025-03-31)
+
+### 🐛 Bug Fixes
+
+- Fix missing coverage command ([9696280](https://github.com/localazy/release/commit/9696280))
+
 # 2.19.0 (2025-03-05)
 
 ### ✨ Features
