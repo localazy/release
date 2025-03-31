@@ -150,16 +150,19 @@ runs:
       id: data
       run: |
         $(echo "${{ inputs.badges-size-command }}")
-        $(echo "${{ inputs.badges-coverage-command }}")
+
+        if ! eval "${{ inputs.badges-coverage-command }}"; then
+          COVERAGE=""
+        else
+          COVERAGE=$(${{ inputs.badges-coverage }})
+        fi
+        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
 
         VERSION=$(${{ inputs.badges-version }})
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
         LICENSE=$(${{ inputs.badges-license }})
         echo "license=$LICENSE" >> "$GITHUB_OUTPUT"
-
-        COVERAGE=$(${{ inputs.badges-coverage }})
-        echo "coverage=$COVERAGE" >> "$GITHUB_OUTPUT"
 
         if [ "${{ inputs.badges-size }}" != "" ]
         then
